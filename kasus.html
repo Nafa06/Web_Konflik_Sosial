@@ -2,41 +2,60 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ruang Kasus - Ruang Resolusi</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <nav>
+
+    <div class="app-container">
+        
+        <header>
             <a href="index.html" class="logo">Ruang Resolusi</a>
-            <ul class="nav-links">
+            <button class="menu-btn" id="open-menu">☰</button>
+        </header>
+
+        <div class="backdrop" id="backdrop"></div>
+        <div class="mobile-menu" id="sidebar">
+            <button class="close-btn" id="close-menu">×</button>
+            <ul class="menu-links">
                 <li><a href="index.html">Beranda</a></li>
                 <li><a href="teori.html">Ruang Teori</a></li>
-                <li><a href="kasus.html" style="color: var(--secondary-color);">Ruang Kasus</a></li>
+                <li><a href="kasus.html" style="color: #3b82f6;">Ruang Kasus</a></li>
                 <li><a href="resolusi.html">Ruang Resolusi</a></li>
             </ul>
-        </nav>
-    </header>
+        </div>
 
-    <section class="hero" style="padding: 60px 20px;">
-        <h1>Ruang Kasus</h1>
-        <p>Membedah dinamika konflik di dunia nyata untuk memahami akar masalah.</p>
-    </section>
+        <main class="content text-content">
+            <h2 class="page-title">Ruang Kasus</h2>
+            
+            <h3>Analisis Konflik di Sekitar Kita</h3>
+            <p>Setiap masyarakat memiliki dinamika konfliknya masing-masing. Di ruang ini, kita membedah kejadian nyata untuk memahami akar masalah dan bagaimana konflik tersebut berproses secara sosiologis.</p>
 
-    <section class="content-section">
-        <h2>Analisis Konflik di Sekitar Kita</h2>
-        <p>Setiap masyarakat memiliki dinamika konfliknya masing-masing. Di ruang ini, kita akan membedah kejadian nyata untuk memahami akar masalah dan bagaimana konflik tersebut berproses berdasarkan kacamata sosiologi.</p>
+            <h3>Contoh Kasus: Konflik Agraria</h3>
+            <ul>
+                <li><strong>Kronologi Singkat:</strong> Bermula ketika lahan adat warga secara sepihak diklaim oleh perusahaan perkebunan.</li>
+                <li><strong>Akar Masalah:</strong> Didasari oleh faktor perbedaan kepentingan ekonomi dan status kepemilikan lahan antara warga dan korporasi.</li>
+                <li><strong>Dampak:</strong> Terhentinya aktivitas ekonomi warga dan timbulnya ketidakpercayaan terhadap aparat penegak hukum.</li>
+                <li><strong>Upaya Penyelesaian:</strong> Diredakan lewat mediasi oleh pemerintah daerah setempat.</li>
+            </ul>
+        </main>
 
-        <h3 style="margin-top: 40px;">Contoh Kasus: Konflik Agraria di Desa X</h3>
-        <ul>
-            <li><strong>Kronologi Singkat:</strong> Konflik bermula ketika lahan adat warga diklaim oleh perusahaan...</li>
-            <li><strong>Akar Masalah:</strong> Berdasarkan teori sosiologi, konflik ini didasari oleh faktor <strong>perbedaan kepentingan</strong> ekonomi.</li>
-            <li><strong>Dampak yang Terjadi:</strong> Terhentinya aktivitas ekonomi warga dan kerusakan fasilitas umum.</li>
-            <li><strong>Upaya Penyelesaian:</strong> Diredakan lewat mediasi oleh pemerintah daerah.</li>
-        </ul>
-    </section>
+        <footer>
+            <p>&copy; 2026 Ruang Resolusi</p>
+        </footer>
 
-    <footer><p>&copy; 2026 Ruang Resolusi</p></footer>
+    </div>
+
+    <script>
+        const openBtn = document.getElementById('open-menu');
+        const closeBtn = document.getElementById('close-menu');
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('backdrop');
+
+        openBtn.addEventListener('click', () => { sidebar.classList.add('active'); backdrop.classList.add('active'); });
+        closeBtn.addEventListener('click', () => { sidebar.classList.remove('active'); backdrop.classList.remove('active'); });
+        backdrop.addEventListener('click', () => { sidebar.classList.remove('active'); backdrop.classList.remove('active'); });
+    </script>
 </body>
 </html>
