@@ -192,3 +192,12 @@ footer {
     background: #f8f9fa; 
     border-top: 1px solid #eee; 
 }
+
+.text-content img {
+    max-width: 100%;   /* Lebar maksimal gambar hanya 100% dari wadah teks, tidak boleh lebih */
+    height: auto;      /* Tinggi otomatis menyesuaikan lebar agar proporsional (tidak gepeng) */
+    display: block;    /* Menghilangkan jarak whitespace kecil di bawah gambar */
+    margin: 20px auto; /* Memberi jarak atas-bawah dan mengatur posisi ke tengah */
+    border-radius: 8px; /* Opsional: Biar sudut gambar agak tumpul mengikuti desain mobile */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Opsional: Memberi bayangan tipis agar gambar terlihat terangkat */
+}
