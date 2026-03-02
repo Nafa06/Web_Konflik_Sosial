@@ -1,0 +1,194 @@
+/* css/style.css */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+}
+
+body { 
+    background-color: #e9ecef; /* Latar belakang abu-abu untuk area luar layar HP */
+    display: flex; 
+    justify-content: center; 
+}
+
+/* Container utama yang menyerupai layar HP */
+.app-container { 
+    width: 100%; 
+    max-width: 480px; /* Batas maksimal lebar layar HP */
+    background-color: #ffffff; 
+    min-height: 100vh; 
+    position: relative; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.1); 
+    overflow-x: hidden; 
+}
+
+/* Header & Navbar */
+header { 
+    background-color: #1e3a8a; 
+    color: white; 
+    padding: 15px 20px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    position: sticky; 
+    top: 0; 
+    z-index: 100; 
+}
+
+.logo { 
+    font-size: 1.2rem; 
+    font-weight: bold; 
+    color: white; 
+    text-decoration: none; 
+}
+
+.menu-btn { 
+    background: none; 
+    border: none; 
+    color: white; 
+    font-size: 1.8rem; 
+    cursor: pointer; 
+}
+
+/* Sidebar Menu (Off-canvas) */
+.mobile-menu { 
+    position: absolute; /* Mengikuti app-container */
+    top: 0; 
+    left: -100%; 
+    width: 260px; 
+    min-height: 100vh; 
+    background: #fff; 
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1); 
+    transition: left 0.3s ease; 
+    z-index: 200; 
+    padding: 20px; 
+}
+
+.mobile-menu.active { 
+    left: 0; 
+}
+
+.close-btn { 
+    background: none; 
+    border: none; 
+    font-size: 2rem; 
+    color: #333; 
+    cursor: pointer; 
+    margin-bottom: 30px; 
+}
+
+.menu-links { list-style: none; }
+.menu-links li { margin-bottom: 10px; }
+.menu-links a { 
+    text-decoration: none; 
+    color: #333; 
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    display: block; 
+    padding: 12px 0; 
+    border-bottom: 1px solid #f0f0f0; 
+}
+.menu-links a:active { color: #3b82f6; }
+
+/* Backdrop Hitam Transparan */
+.backdrop { 
+    position: absolute; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.5); 
+    z-index: 150; 
+    display: none; 
+}
+.backdrop.active { display: block; }
+
+/* Hero Section */
+.hero { 
+    padding: 30px 20px; 
+    text-align: center; 
+    background-color: #f8f9fa; 
+    border-bottom: 1px solid #eee; 
+}
+.hero h1 { 
+    font-size: 1.6rem; 
+    color: #1e3a8a; 
+    margin-bottom: 10px; 
+}
+.hero p { 
+    font-size: 0.95rem; 
+    color: #555; 
+    line-height: 1.5;
+}
+
+/* Content Area */
+.content { padding: 20px; }
+
+/* Desain Card Menu */
+.card { 
+    background: #fff; 
+    border: 1px solid #eee; 
+    border-radius: 12px; 
+    overflow: hidden; 
+    margin-bottom: 20px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+}
+.card-img { 
+    width: 100%; 
+    height: 160px; 
+    background-color: #ddd; 
+    object-fit: cover; 
+}
+.card-body { padding: 15px; }
+.card-body h3 { 
+    color: #1e3a8a; 
+    margin-bottom: 8px; 
+    font-size: 1.2rem; 
+}
+.card-body p { 
+    color: #666; 
+    font-size: 0.9rem; 
+    margin-bottom: 15px; 
+    line-height: 1.5; 
+}
+.card-btn { 
+    display: block; 
+    width: 100%; 
+    text-align: center; 
+    background-color: #3b82f6; 
+    color: white; 
+    padding: 12px; 
+    text-decoration: none; 
+    border-radius: 8px; 
+    font-weight: bold; 
+}
+
+/* Tipografi untuk Halaman Materi (Teori, Kasus, Resolusi) */
+.page-title { 
+    font-size: 1.4rem; 
+    color: #1e3a8a; 
+    margin-bottom: 15px; 
+    border-bottom: 2px solid #3b82f6; 
+    padding-bottom: 10px; 
+}
+.text-content h3 { 
+    font-size: 1.1rem; 
+    margin: 20px 0 10px; 
+    color: #333; 
+}
+.text-content p, .text-content ul { 
+    font-size: 0.95rem; 
+    color: #555; 
+    margin-bottom: 15px; 
+    line-height: 1.6; 
+}
+.text-content ul { padding-left: 20px; }
+
+/* Footer */
+footer { 
+    text-align: center; 
+    padding: 20px; 
+    font-size: 0.8rem; 
+    color: #888; 
+    background: #f8f9fa; 
+    border-top: 1px solid #eee; 
+}

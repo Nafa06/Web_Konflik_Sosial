@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ruang Resolusi</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header>
+            <a href="index.html" class="logo">Ruang Resolusi</a>
+            <button class="menu-btn" id="open-menu">☰</button>
+        </header>
+
+        <div class="backdrop" id="backdrop"></div>
+        <div class="mobile-menu" id="sidebar">
+            <button class="close-btn" id="close-menu">×</button>
+            <ul class="menu-links">
+                <li><a href="index.html" style="color: #3b82f6;">Beranda</a></li>
+                <li><a href="teori.html">Ruang Teori</a></li>
+                <li><a href="kasus.html">Ruang Kasus</a></li>
+                <li><a href="resolusi.html">Ruang Resolusi</a></li>
+            </ul>
+        </div>
+
+        <section class="hero">
+            <h1>Halo, Selamat Datang!</h1>
+            <p>Pusat pembelajaran interaktif konflik dan integrasi sosial khusus dalam genggamanmu.</p>
+        </section>
+
+        <main class="content">
+            <div class="card">
+                <img src="img/gambar-teori.jpg" alt="Teori" class="card-img">
+                <div class="card-body">
+                    <h3>Ruang Teori</h3>
+                    <p>Materi dasar mengenai definisi, faktor penyebab, hingga dampak konflik sosial.</p>
+                    <a href="teori.html" class="card-btn">Pelajari Materi</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="img/gambar-kasus.jpg" alt="Kasus" class="card-img">
+                <div class="card-body">
+                    <h3>Ruang Kasus</h3>
+                    <p>Eksplorasi kejadian nyata dan studi kasus konflik secara sosiologis.</p>
+                    <a href="kasus.html" class="card-btn">Buka Kasus</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="img/gambar-resolusi.jpg" alt="Resolusi" class="card-img">
+                <div class="card-body">
+                    <h3>Ruang Resolusi</h3>
+                    <p>Cara pengendalian konflik dan proses terbentuknya integrasi sosial.</p>
+                    <a href="resolusi.html" class="card-btn">Lihat Resolusi</a>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Ruang Resolusi</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const openBtn = document.getElementById('open-menu');
+        const closeBtn = document.getElementById('close-menu');
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('backdrop');
+
+        function openMenu() {
+            sidebar.classList.add('active');
+            backdrop.classList.add('active');
+        }
+
+        function closeMenu() {
+            sidebar.classList.remove('active');
+            backdrop.classList.remove('active');
+        }
+
+        openBtn.addEventListener('click', openMenu);
+        closeBtn.addEventListener('click', closeMenu);
+        backdrop.addEventListener('click', closeMenu);
+    </script>
+</body>
+</html>

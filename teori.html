@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ruang Teori - Ruang Resolusi</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header>
+            <a href="index.html" class="logo">Ruang Resolusi</a>
+            <button class="menu-btn" id="open-menu">☰</button>
+        </header>
+
+        <div class="backdrop" id="backdrop"></div>
+        <div class="mobile-menu" id="sidebar">
+            <button class="close-btn" id="close-menu">×</button>
+            <ul class="menu-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="teori.html" style="color: #3b82f6;">Ruang Teori</a></li>
+                <li><a href="kasus.html">Ruang Kasus</a></li>
+                <li><a href="resolusi.html">Ruang Resolusi</a></li>
+            </ul>
+        </div>
+
+        <main class="content text-content">
+            <h2 class="page-title">Ruang Teori</h2>
+            
+            <h3>Pengertian Konflik Sosial</h3>
+            <p>Konflik sosial adalah suatu proses sosial di mana individu atau kelompok berusaha memenuhi tujuannya dengan menantang pihak lawan yang disertai ancaman dan/atau kekerasan.</p>
+
+            <h3>Faktor Penyebab</h3>
+            <ul>
+                <li>Perbedaan antar-individu (pendirian, perasaan).</li>
+                <li>Perbedaan kebudayaan.</li>
+                <li>Perbedaan kepentingan (ekonomi, politik).</li>
+                <li>Perubahan sosial yang cepat.</li>
+            </ul>
+
+            <h3>Dampak Konflik</h3>
+            <p>Konflik dapat mendatangkan dampak negatif seperti rusaknya hubungan dan harta benda, namun juga memiliki dampak positif seperti memperkuat solidaritas dalam kelompok (*in-group solidarity*).</p>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Ruang Resolusi</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const openBtn = document.getElementById('open-menu');
+        const closeBtn = document.getElementById('close-menu');
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('backdrop');
+
+        openBtn.addEventListener('click', () => { sidebar.classList.add('active'); backdrop.classList.add('active'); });
+        closeBtn.addEventListener('click', () => { sidebar.classList.remove('active'); backdrop.classList.remove('active'); });
+        backdrop.addEventListener('click', () => { sidebar.classList.remove('active'); backdrop.classList.remove('active'); });
+    </script>
+</body>
+</html>
