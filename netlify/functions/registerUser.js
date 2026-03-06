@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // Diambil dari environment variable Netlify
+  connectionString: process.env.NETLIFY_DATABASE_URL, // Diambil dari environment variable Netlify
   ssl: { rejectUnauthorized: false }
 });
 
