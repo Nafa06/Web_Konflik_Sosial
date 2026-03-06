@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Register - PERSIKOS ADVENTURE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+        body { background-color: #0b1a30; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .login-wrapper { width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center; }
+        
+        .header-section { text-align: center; margin-bottom: 25px; }
+        .logo-circle { width: 70px; height: 70px; background-color: #facc15; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px; box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3); }
+        .logo-circle svg { width: 40px; height: 40px; fill: #0b1a30; }
+        .header-section h1 { color: #facc15; font-size: 1.6rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .header-section p { color: #94a3b8; font-size: 0.85rem; }
+
+        .login-card { background-color: #12233f; width: 100%; padding: 25px 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); border: 1px solid #1e365d; }
+        .card-title { color: #facc15; font-size: 1rem; font-weight: bold; text-align: center; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 6px; text-align: center; }
+        .form-control { width: 100%; padding: 12px 15px; background-color: #1a3156; border: 1px solid #274373; border-radius: 8px; color: #ffffff; font-size: 0.9rem; outline: none; transition: all 0.3s; text-align: center; }
+        .form-control::placeholder { color: #475569; }
+        .form-control:focus { border-color: #3b82f6; background-color: #1e3863; }
+
+        .btn-submit { width: 100%; max-width: 250px; margin: 25px auto 0; display: block; padding: 14px; background-color: #facc15; color: #0f172a; border: none; border-radius: 50px; font-weight: 800; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(250, 204, 21, 0.2); transition: all 0.3s; }
+        .btn-submit:active { transform: scale(0.96); }
+
+        .back-link { display: block; text-align: center; margin-top: 20px; font-size: 0.85rem; color: #94a3b8; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <div class="header-section">
+            <div class="logo-circle">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 12l10 5 10-5M2 17l10 5 10-5" stroke="#0b1a30" stroke-width="2" stroke-linejoin="round" fill="none"/></svg>
+            </div>
+            <h1>PERSIKOS ADVENTURE</h1>
+            <p>Pendaftaran Peserta Baru</p>
+        </div>
+
+        <div class="login-card">
+            <div class="card-title"><span>📝</span> Registrasi Akun</div>
+            
+            <form id="formRegister">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" class="form-control" placeholder="Contoh: Budi Santoso" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Nomor Absen / NIS</label>
+                    <input type="number" class="form-control" placeholder="Masukkan nomor" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Buat Password</label>
+                    <input type="password" class="form-control" placeholder="Minimal 6 karakter" required>
+                </div>
+
+                <button type="submit" id="btnSubmit" class="btn-submit">Daftar Sekarang</button>
+            </form>
+        </div>
+        
+        <a href="index.html" class="back-link">← Kembali ke Beranda</a>
+    </div>
+
+    <script>
+        document.getElementById('formRegister').addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form langsung terkirim
+
+            const btn = document.getElementById('btnSubmit');
+
+            // 1. Fase Loading (Animasi Memproses)
+            btn.innerHTML = '⏳ Memproses...';
+            btn.style.backgroundColor = '#eab308'; // Warna kuning gelap
+            btn.style.cursor = 'wait';
+            btn.disabled = true;
+
+            // 2. Fase Sukses (Setelah 1.5 detik)
+            setTimeout(() => {
+                btn.innerHTML = '✅ Pendaftaran Berhasil!';
+                btn.style.backgroundColor = '#10b981'; // Berubah jadi warna hijau sukses
+                btn.style.color = '#ffffff'; // Teks jadi putih
+                btn.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.4)';
+
+                // 3. Fase Redirect (Kembali ke index.html setelah notif sukses tampil 1.5 detik)
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+
+            }, 1500); // Waktu loading 1.5 detik
+        });
+    </script>
+
+</body>
+</html>
