@@ -5,14 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Refleksi Materi Siswa</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Gaya tambahan khusus index.html */
+        .header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .header-right { display: flex; align-items: center; gap: 15px; }
+        #userGreeting { font-size: 0.9rem; font-weight: bold; color: #facc15; }
+    </style>
 </head>
 <body>
 
     <div class="app-container">
         
         <header>
-            <a href="index.html" class="logo">Refleksi Materi Siswa</a>
-            <button class="menu-btn" id="open-menu">☰</button>
+            <div class="header-container">
+                <a href="index.html" class="logo">Refleksi Materi Siswa</a>
+                
+                <div class="header-right">
+                    <span id="userGreeting" style="display: none;"></span>
+                    <button class="menu-btn" id="open-menu">☰</button>
+                </div>
+            </div>
         </header>
 
         <div class="backdrop" id="backdrop"></div>
@@ -30,7 +42,8 @@
             <span class="subtitle">Welcome To PERSIKOS</span>
             <h1>Pendidikan dan Resolusi Konflik Sosial</h1>
             <p>PERSIKOS hadir sebagai ruang belajar dan refleksi bagi Generasi Z untuk memahami dan mengelola konflik sosial secara bijak. Di tengah keberagaman dan derasnya arus informasi, PERSIKOS menanamkan literasi sosial, budaya dialog, serta nilai toleransi agar perbedaan tidak berujung perpecahan. Bersama PERSIKOS, konflik tidak dihindari, tetapi diselesaikan dengan empati, komunikasi, dan semangat harmoni.</p>
-            <a href="register.html" class="btn-hero-register">🎮 Register Akun Siswa</a>
+            
+            <a href="register.html" id="btnHeroRegister" class="btn-hero-register">🎮 Register Akun Siswa</a>
         </section>
 
         <main class="content">
@@ -89,47 +102,28 @@
         closeBtn.addEventListener('click', closeMenu);
         backdrop.addEventListener('click', closeMenu);
 
-        // Script untuk mengirim Form ke Netlify Functions & Database Neon
-        document.getElementById('formPesan').addEventListener('submit', async function(e) {
-            e.preventDefault(); // Mencegah reload halaman
-            
-            const btnSubmit = document.getElementById('btnSubmit');
-            const statusPesan = document.getElementById('statusPesan');
-            
-            // Mengambil nilai dari input form
-            const data = {
-                nama: document.getElementById('inputNama').value,
-                email: document.getElementById('inputEmail').value,
-                pesan: document.getElementById('inputPesan').value
-            };
+        // --- SCRIPT BARU: Pengecekan Status Registrasi ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mengecek apakah ada nama user yang tersimpan di localStorage
+            const userName = localStorage.getItem('userName');
+            const greetingElement = document.getElementById('userGreeting');
+            const btnRegisterElement = document.getElementById('btnHeroRegister');
 
-            // Mengubah status tombol saat proses loading
-            btnSubmit.innerText = 'Mengirim...';
-            btnSubmit.disabled = true;
-
-            try {
-                // Mengirim data ke Netlify Function (API backend kita)
-                const response = await fetch('/.netlify/functions/kirimPesan', {
-                    method: 'POST',
-                    body: JSON.stringify(data)
-                });
-
-                if (response.ok) {
-                    statusPesan.style.display = 'block';
-                    statusPesan.style.color = '#10b981'; // Warna hijau sukses
-                    statusPesan.innerText = 'Pesan berhasil dikirim!';
-                    this.reset(); // Kosongkan isian form
-                } else {
-                    throw new Error('Gagal');
+            if (userName) {
+                // Jika sudah ada nama (berarti sudah daftar)
+                greetingElement.innerText = `Halo! ${userName}`;
+                greetingElement.style.display = 'inline-block'; // Tampilkan sapaan di header
+                
+                if (btnRegisterElement) {
+                    btnRegisterElement.style.display = 'none'; // Sembunyikan tombol register di hero
                 }
-            } catch (error) {
-                statusPesan.style.display = 'block';
-                statusPesan.style.color = '#ef4444'; // Warna merah error
-                statusPesan.innerText = 'Terjadi kesalahan saat mengirim pesan.';
-            } finally {
-                // Mengembalikan tombol ke kondisi awal
-                btnSubmit.innerText = 'Kirim Pesan';
-                btnSubmit.disabled = false;
+            } else {
+                // Jika belum daftar
+                greetingElement.style.display = 'none'; // Sembunyikan sapaan
+                
+                if (btnRegisterElement) {
+                    btnRegisterElement.style.display = 'inline-block'; // Pastikan tombol register muncul
+                }
             }
         });
     </script>

@@ -47,17 +47,17 @@
             <form id="formRegister">
                 <div class="form-group">
                     <label>Nama Lengkap</label>
-                    <input type="text" class="form-control" placeholder="Contoh: Budi Santoso" required>
+                    <input type="text" id="inputNama" class="form-control" placeholder="Contoh: Budi Santoso" required>
                 </div>
                 
                 <div class="form-group">
                     <label>Nomor Absen / NIS</label>
-                    <input type="number" class="form-control" placeholder="Masukkan nomor" required>
+                    <input type="number" id="inputNis" class="form-control" placeholder="Masukkan nomor" required>
                 </div>
 
                 <div class="form-group">
                     <label>Buat Password</label>
-                    <input type="password" class="form-control" placeholder="Minimal 6 karakter" required>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Minimal 6 karakter" required>
                 </div>
 
                 <button type="submit" id="btnSubmit" class="btn-submit">Daftar Sekarang</button>
@@ -68,30 +68,56 @@
     </div>
 
     <script>
-        document.getElementById('formRegister').addEventListener('submit', function(e) {
-            e.preventDefault(); // Mencegah form langsung terkirim
+        document.getElementById('formRegister').addEventListener('submit', async function(e) {
+            e.preventDefault(); 
 
             const btn = document.getElementById('btnSubmit');
+            const nama = document.getElementById('inputNama').value;
+            const nis = document.getElementById('inputNis').value;
+            const password = document.getElementById('inputPassword').value;
 
-            // 1. Fase Loading (Animasi Memproses)
+            // 1. Fase Loading
             btn.innerHTML = '⏳ Memproses...';
-            btn.style.backgroundColor = '#eab308'; // Warna kuning gelap
+            btn.style.backgroundColor = '#eab308'; 
             btn.style.cursor = 'wait';
             btn.disabled = true;
 
-            // 2. Fase Sukses (Setelah 1.5 detik)
-            setTimeout(() => {
-                btn.innerHTML = '✅ Pendaftaran Berhasil!';
-                btn.style.backgroundColor = '#10b981'; // Berubah jadi warna hijau sukses
-                btn.style.color = '#ffffff'; // Teks jadi putih
-                btn.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.4)';
+            try {
+                // Kirim data ke API backend
+                const response = await fetch('/.netlify/functions/registerUser', {
+                    method: 'POST',
+                    body: JSON.stringify({ nama, nis, password })
+                });
 
-                // 3. Fase Redirect (Kembali ke index.html setelah notif sukses tampil 1.5 detik)
+                if (response.ok) {
+                    // Simpan nama di penyimpanan lokal browser
+                    localStorage.setItem('userName', nama);
+
+                    // 2. Fase Sukses
+                    btn.innerHTML = '✅ Pendaftaran Berhasil!';
+                    btn.style.backgroundColor = '#10b981'; 
+                    btn.style.color = '#ffffff'; 
+                    btn.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.4)';
+
+                    // 3. Pindah Halaman
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    throw new Error('Gagal menyimpan data ke server');
+                }
+            } catch (error) {
+                // Fase Error
+                btn.innerHTML = '❌ Gagal Mendaftar';
+                btn.style.backgroundColor = '#ef4444';
+                
                 setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
-
-            }, 1500); // Waktu loading 1.5 detik
+                    btn.innerHTML = 'Daftar Sekarang';
+                    btn.style.backgroundColor = '#facc15';
+                    btn.disabled = false;
+                    btn.style.cursor = 'pointer';
+                }, 2000);
+            }
         });
     </script>
 
