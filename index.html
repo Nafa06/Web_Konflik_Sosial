@@ -29,9 +29,25 @@
         <section class="hero">
             <span class="subtitle">Welcome To PERSIKOS</span>
             <h1>Pendidikan dan Resolusi Konflik Sosial</h1>
-            <p>PERSIKOS hadir sebagai ruang belajar dan refleksi bagi Generasi Z untuk memahami dan mengelola konflik sosial secara bijak. Di tengah keberagaman dan derasnya arus informasi, PERSIKOS menanamkan literasi sosial, budaya dialog, serta nilai toleransi agar perbedaan tidak berujung perpecahan.
-Bersama PERSIKOS, konflik tidak dihindari, tetapi diselesaikan dengan empati, komunikasi, dan semangat harmoni.</p>
-        </section>
+            <p>PERSIKOS hadir sebagai ruang belajar dan refleksi bagi Generasi Z untuk memahami dan mengelola konflik sosial secara bijak. Di tengah keberagaman dan derasnya arus informasi, PERSIKOS menanamkan literasi sosial, budaya dialog, serta nilai toleransi agar perbedaan tidak berujung perpecahan. Bersama PERSIKOS, konflik tidak dihindari, tetapi diselesaikan dengan empati, komunikasi, dan semangat harmoni.</p>
+            
+            <div class="hero-form-container">
+                <h3>Punya Pertanyaan / Diskusi?</h3>
+                <form id="formPesan">
+                    <div class="form-group">
+                        <input type="text" id="inputNama" class="form-control" placeholder="Nama Lengkap Kamu" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="inputEmail" class="form-control" placeholder="Alamat Email (Opsional)">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="inputPesan" class="form-control" rows="3" placeholder="Tuliskan pertanyaan atau topik yang ingin dibahas..." required></textarea>
+                    </div>
+                    <button type="submit" id="btnSubmit" class="btn-submit">Kirim Pesan</button>
+                </form>
+                <p id="statusPesan" style="margin-top: 10px; font-size: 0.9rem; text-align: center; display: none;"></p>
+            </div>
+            </section>
 
         <main class="content">
             <div class="card">
@@ -69,6 +85,7 @@ Bersama PERSIKOS, konflik tidak dihindari, tetapi diselesaikan dengan empati, ko
     </div>
 
     <script>
+        // Script untuk mengatur Sidebar Menu
         const openBtn = document.getElementById('open-menu');
         const closeBtn = document.getElementById('close-menu');
         const sidebar = document.getElementById('sidebar');
@@ -87,6 +104,50 @@ Bersama PERSIKOS, konflik tidak dihindari, tetapi diselesaikan dengan empati, ko
         openBtn.addEventListener('click', openMenu);
         closeBtn.addEventListener('click', closeMenu);
         backdrop.addEventListener('click', closeMenu);
+
+        // Script untuk mengirim Form ke Netlify Functions & Database Neon
+        document.getElementById('formPesan').addEventListener('submit', async function(e) {
+            e.preventDefault(); // Mencegah reload halaman
+            
+            const btnSubmit = document.getElementById('btnSubmit');
+            const statusPesan = document.getElementById('statusPesan');
+            
+            // Mengambil nilai dari input form
+            const data = {
+                nama: document.getElementById('inputNama').value,
+                email: document.getElementById('inputEmail').value,
+                pesan: document.getElementById('inputPesan').value
+            };
+
+            // Mengubah status tombol saat proses loading
+            btnSubmit.innerText = 'Mengirim...';
+            btnSubmit.disabled = true;
+
+            try {
+                // Mengirim data ke Netlify Function (API backend kita)
+                const response = await fetch('/.netlify/functions/kirimPesan', {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    statusPesan.style.display = 'block';
+                    statusPesan.style.color = '#10b981'; // Warna hijau sukses
+                    statusPesan.innerText = 'Pesan berhasil dikirim!';
+                    this.reset(); // Kosongkan isian form
+                } else {
+                    throw new Error('Gagal');
+                }
+            } catch (error) {
+                statusPesan.style.display = 'block';
+                statusPesan.style.color = '#ef4444'; // Warna merah error
+                statusPesan.innerText = 'Terjadi kesalahan saat mengirim pesan.';
+            } finally {
+                // Mengembalikan tombol ke kondisi awal
+                btnSubmit.innerText = 'Kirim Pesan';
+                btnSubmit.disabled = false;
+            }
+        });
     </script>
 </body>
 </html>
