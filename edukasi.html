@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ruang Edukasi - PERSIKOS ADVENTURE</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* CSS Khusus Tema Game PERSIKOS ADVENTURE */
+        body { background-color: #0b1a30; color: #ffffff; padding-bottom: 40px; margin: 0; font-family: -apple-system, sans-serif; }
+        
+        /* Header Navigasi Atas */
+        .app-header { background-color: #12233f; padding: 15px 20px; display: flex; align-items: center; gap: 15px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #1e365d; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .back-btn { color: #facc15; text-decoration: none; font-size: 1.5rem; font-weight: bold; padding-right: 10px; }
+        .header-title { font-size: 1.2rem; color: #facc15; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* Container Materi */
+        .container { padding: 25px 20px; max-width: 480px; margin: 0 auto; }
+        
+        /* Kartu Materi ala Level Game */
+        .level-card { background-color: #12233f; border: 1px solid #1e365d; border-radius: 16px; padding: 25px 20px 20px; margin-bottom: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); position: relative; }
+        
+        /* Lencana Level di pojok kiri atas */
+        .level-badge { position: absolute; top: -15px; left: 20px; background-color: #facc15; color: #0f172a; font-weight: 900; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(250,204,21,0.3); letter-spacing: 1px;}
+        
+        .level-title { color: #ffffff; font-size: 1.3rem; margin-top: 5px; margin-bottom: 15px; border-bottom: 1px dashed #274373; padding-bottom: 10px; }
+        .level-content { color: #cbd5e1; font-size: 0.95rem; line-height: 1.7; }
+        .level-content ul { padding-left: 20px; margin-top: 10px; }
+        .level-content li { margin-bottom: 8px; }
+        
+        /* Teks yang di-highlight warna kuning */
+        .highlight { color: #facc15; font-weight: bold; }
+        
+        /* Tombol Selesai */
+        .btn-finish { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background-color: #10b981; color: white; padding: 16px; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 40px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); transition: transform 0.2s; }
+        .btn-finish:active { transform: scale(0.96); background-color: #059669; }
+    </style>
+</head>
+<body>
+
+    <header class="app-header">
+        <a href="index.html" class="back-btn">←</a>
+        <div class="header-title">📚 Ruang Edukasi</div>
+    </header>
+
+    <div class="container">
+        
+        <div class="level-card">
+            <div class="level-badge">LEVEL 1</div>
+            <h2 class="level-title">Pengertian Konflik Sosial</h2>
+            <div class="level-content">
+                <p>Secara sosiologis, <span class="highlight">Konflik Sosial</span> adalah suatu proses sosial antara dua orang atau lebih (bisa juga kelompok) di mana salah satu pihak berusaha menyingkirkan pihak lain dengan menghancurkannya atau membuatnya tidak berdaya.</p>
+                <br>
+                <p>Konflik adalah hal yang wajar terjadi dalam masyarakat yang dinamis, karena setiap individu pasti memiliki perbedaan pandangan, latar belakang, dan kepentingan.</p>
+            </div>
+        </div>
+
+        <div class="level-card">
+            <div class="level-badge">LEVEL 2</div>
+            <h2 class="level-title">Akar Penyebab Konflik</h2>
+            <div class="level-content">
+                <p>Mengapa pertikaian bisa terjadi? Berikut adalah 4 faktor utama pemicunya:</p>
+                <ul>
+                    <li><span class="highlight">Perbedaan Individu:</span> Perbedaan perasaan, pendirian, atau pendapat antar manusia.</li>
+                    <li><span class="highlight">Perbedaan Kebudayaan:</span> Latar belakang budaya yang berbeda membentuk watak dan kepribadian yang berbeda pula.</li>
+                    <li><span class="highlight">Perbedaan Kepentingan:</span> Gesekan dalam hal ekonomi, politik, atau pembagian kekuasaan.</li>
+                    <li><span class="highlight">Perubahan Sosial:</span> Perubahan nilai yang terjadi terlalu cepat di dalam tatanan masyarakat.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="level-card">
+            <div class="level-badge">LEVEL 3</div>
+            <h2 class="level-title">Dampak yang Ditimbulkan</h2>
+            <div class="level-content">
+                <p>Konflik ibarat pisau bermata dua. Ia tidak selalu memberikan kerugian, lho!</p>
+                <ul>
+                    <li><span class="highlight">Dampak Negatif:</span> Rusaknya fasilitas umum, jatuhnya korban fisik/mental, dan retaknya hubungan antar kelompok masyarakat.</li>
+                    <li><span class="highlight">Dampak Positif:</span> Memperkuat solidaritas di dalam kelompok yang sama (*in-group solidarity*), mendorong munculnya kompromi baru, dan mengurangi ketergantungan antar individu.</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="index.html" class="btn-finish">
+            🏆 Selesaikan Materi & Kembali
+        </a>
+    </div>
+
+</body>
+</html>

@@ -33,7 +33,7 @@
             <ul class="menu-links">
                 <li><a href="index.html" style="color: #3b82f6;">Beranda</a></li>
                 
-                <li><a href="https://ilyflowers.my.canva.site/c38ka9qvdmn98tvq" target="_blank">Ruang Edukasi</a></li>
+                <li><a href="edukasi.html">Ruang Edukasi</a></li>
                 
                 <li><a href="kasus.html">Cuplikan dan Penyelesaian Konflik Sosial</a></li>
                 <li><a href="resolusi.html">Refleksi Materi Siswa</a></li>
@@ -55,7 +55,7 @@
                     <div class="card-body">
                         <h3>Ruang Edukasi</h3>
                         <p>Materi interaktif mengenai definisi, faktor penyebab, hingga dampak konflik sosial.</p>
-                        <button onclick="bukaEdukasi()" class="card-btn" style="border: none; cursor: pointer; width: 100%;">📚 Mulai Belajar</button>
+                        <a href="edukasi.html" class="card-btn">📚 Mulai Belajar</a>
                     </div>
                 </div>
 
@@ -153,29 +153,6 @@ Agar menu samping tidak me-*reload* halaman saat diklik, ubah bagian `<ul class=
                 }
             }
         });
-        // --- SCRIPT BARU: Buka & Tutup Ruang Edukasi Tanpa Reload ---
-        function bukaEdukasi() {
-            // Sembunyikan beranda, tampilkan Canva
-            document.getElementById('halaman-utama').style.display = 'none';
-            document.getElementById('halaman-edukasi').style.display = 'block';
-            
-            // Tutup sidebar jika dibuka dari menu
-            sidebar.classList.remove('active');
-            backdrop.classList.remove('active');
-            
-            // Otomatis scroll ke paling atas
-            window.scrollTo(0, 0);
-        }
-
-        function tutupEdukasi() {
-            // Sembunyikan Canva, tampilkan beranda
-            document.getElementById('halaman-edukasi').style.display = 'none';
-            document.getElementById('halaman-utama').style.display = 'block';
-            
-            sidebar.classList.remove('active');
-            backdrop.classList.remove('active');
-            window.scrollTo(0, 0);
-        }
     </script>
 </body>
 </html>
