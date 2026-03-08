@@ -206,7 +206,7 @@ footer {
 .hero { 
     /* Ganti 'bg-hero.jpg' dengan nama gambar kamu. 
        Fungsi linear-gradient di bawah adalah untuk membuat efek gelap/hitam transparan (overlay) */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img/Bg.jpeg'); 
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img/Konflik\ Sosial.jpeg'); 
     background-size: cover;
     background-position: center;
     height: 75vh; /* Mengambil 75% dari tinggi layar HP */
