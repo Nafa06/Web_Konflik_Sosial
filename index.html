@@ -40,47 +40,71 @@
             </ul>
         </div>
 
-        <section class="hero">
-            <span class="subtitle">Welcome To PERSIKOS</span>
-            <h1>Pendidikan dan Resolusi Konflik Sosial</h1>
-            <p>PERSIKOS hadir sebagai ruang belajar dan refleksi bagi Generasi Z untuk memahami dan mengelola konflik sosial secara bijak. Di tengah keberagaman dan derasnya arus informasi, PERSIKOS menanamkan literasi sosial, budaya dialog, serta nilai toleransi agar perbedaan tidak berujung perpecahan. Bersama PERSIKOS, konflik tidak dihindari, tetapi diselesaikan dengan empati, komunikasi, dan semangat harmoni.</p>
+<div id="halaman-utama">
+            <section class="hero">
+                <span class="subtitle">Welcome To PERSIKOS</span>
+                <h1>Pendidikan dan Resolusi Konflik Sosial</h1>
+                <p>PERSIKOS hadir sebagai ruang belajar dan refleksi bagi Generasi Z untuk memahami dan mengelola konflik sosial secara bijak. Bersama PERSIKOS, konflik tidak dihindari, tetapi diselesaikan dengan empati, komunikasi, dan semangat harmoni.</p>
+                
+                <a href="register.html" id="btnHeroRegister" class="btn-hero-register">🎮 Register Akun Siswa</a>
+            </section>
+
+            <main class="content" id="area-materi">
+                <div class="card">
+                    <img src="img/Teori.jpeg" alt="Ruang Edukasi" class="card-img">
+                    <div class="card-body">
+                        <h3>Ruang Edukasi</h3>
+                        <p>Materi interaktif mengenai definisi, faktor penyebab, hingga dampak konflik sosial.</p>
+                        <button onclick="bukaEdukasi()" class="card-btn" style="border: none; cursor: pointer; width: 100%;">📚 Mulai Belajar</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/gambar-kasus.jpg" alt="Kasus" class="card-img">
+                    <div class="card-body">
+                        <h3>Cuplikan dan Penyelesaian Konflik Sosial</h3>
+                        <p>Eksplorasi kejadian nyata dan studi kasus konflik secara sosiologis.</p>
+                        <a href="kasus.html" class="card-btn">Buka Kasus</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/gambar-resolusi.jpg" alt="Resolusi" class="card-img">
+                    <div class="card-body">
+                        <h3>Refleksi Materi Siswa</h3>
+                        <p>Cara pengendalian konflik dan proses terbentuknya integrasi sosial.</p>
+                        <a href="resolusi.html" class="card-btn">Lihat Resolusi</a>
+                    </div>
+                </div>
+            </main>
+
+            <footer>
+                <p>&copy; 2026 Refleksi Materi Siswa</p>
+            </footer>
+        </div>
+        <div id="halaman-edukasi" style="display: none; width: 100%; height: calc(100vh - 60px);">
+            <button onclick="tutupEdukasi()" style="width: 100%; padding: 15px; background-color: #facc15; color: #0f172a; border: none; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <span>⬅</span> Simpan Progress & Kembali ke Beranda
+            </button>
             
-            <a href="register.html" id="btnHeroRegister" class="btn-hero-register">🎮 Register Akun Siswa</a>
-        </section>
+            <iframe src="https://ilyflowers.my.canva.site/c38ka9qvdmn98tvq" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+        ```
 
-        <main class="content">
-            <div class="card">
-                <img src="img/Teori.jpeg" alt="Ruang Edukasi" class="card-img">
-                <div class="card-body">
-                    <h3>Ruang Edukasi</h3>
-                    <p>Materi interaktif mengenai definisi, faktor penyebab, hingga dampak konflik sosial.</p>
-                    
-                    <a href="https://ilyflowers.my.canva.site/c38ka9qvdmn98tvq" target="_blank" class="card-btn">📚 Mulai Belajar</a>
-                </div>
-            </div>
+### 2. Ubah Tautan Menu Sidebar
+Agar menu samping tidak me-*reload* halaman saat diklik, ubah bagian `<ul class="menu-links">` di atas menjadi seperti ini:
 
-            <div class="card">
-                <img src="img/gambar-kasus.jpg" alt="Kasus" class="card-img">
-                <div class="card-body">
-                    <h3>Cuplikan dan Penyelesaian Konflik Sosial</h3>
-                    <p>Eksplorasi kejadian nyata dan studi kasus konflik secara sosiologis.</p>
-                    <a href="kasus.html" class="card-btn">Buka Kasus</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="img/gambar-resolusi.jpg" alt="Resolusi" class="card-img">
-                <div class="card-body">
-                    <h3>Refleksi Materi Siswa</h3>
-                    <p>Cara pengendalian konflik dan proses terbentuknya integrasi sosial.</p>
-                    <a href="resolusi.html" class="card-btn">Lihat Resolusi</a>
-                </div>
-            </div>
-        </main>
-
-        <footer>
-            <p>&copy; 2026 Refleksi Materi Siswa</p>
-        </footer>
+```html
+        <div class="mobile-menu" id="sidebar">
+            <button class="close-btn" id="close-menu">×</button>
+            <ul class="menu-links">
+                <li><a href="#" onclick="tutupEdukasi(); return false;" style="color: #3b82f6;">Beranda</a></li>
+                <li><a href="#" onclick="bukaEdukasi(); return false;">Ruang Edukasi</a></li>
+                
+                <li><a href="kasus.html">Cuplikan dan Penyelesaian Konflik Sosial</a></li>
+                <li><a href="resolusi.html">Refleksi Materi Siswa</a></li>
+            </ul>
+        </div>
 
     </div>
 
@@ -129,6 +153,29 @@
                 }
             }
         });
+        // --- SCRIPT BARU: Buka & Tutup Ruang Edukasi Tanpa Reload ---
+        function bukaEdukasi() {
+            // Sembunyikan beranda, tampilkan Canva
+            document.getElementById('halaman-utama').style.display = 'none';
+            document.getElementById('halaman-edukasi').style.display = 'block';
+            
+            // Tutup sidebar jika dibuka dari menu
+            sidebar.classList.remove('active');
+            backdrop.classList.remove('active');
+            
+            // Otomatis scroll ke paling atas
+            window.scrollTo(0, 0);
+        }
+
+        function tutupEdukasi() {
+            // Sembunyikan Canva, tampilkan beranda
+            document.getElementById('halaman-edukasi').style.display = 'none';
+            document.getElementById('halaman-utama').style.display = 'block';
+            
+            sidebar.classList.remove('active');
+            backdrop.classList.remove('active');
+            window.scrollTo(0, 0);
+        }
     </script>
 </body>
 </html>
