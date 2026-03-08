@@ -8,191 +8,140 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Arial, sans-serif; }
         
         body { 
-            background-color: #1e2b4d; /* Warna biru gelap khas dashboard game */
+            background-color: #1a2342; /* Warna biru gelap */
             color: white; 
             min-height: 100vh;
         }
 
-        /* Navigasi Atas */
+        /* Header Navigasi */
         .app-header {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            background-color: #151e36;
-            border-bottom: 1px solid #2a3a60;
-            position: sticky;
-            top: 0;
-            z-index: 50;
+            display: flex; align-items: center; padding: 20px;
+            background-color: transparent; position: sticky; top: 0; z-index: 50;
         }
-        .back-btn { color: white; text-decoration: none; font-size: 1.4rem; font-weight: bold; margin-right: 15px; }
-        .header-title { font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .back-btn { color: white; text-decoration: none; font-size: 1.5rem; font-weight: bold; margin-right: 15px; }
 
-        /* Area Scoreboard */
+        /* Area Judul & Scoreboard */
+        .title-area { text-align: center; margin-bottom: 20px; padding: 0 20px;}
+        .title-area h1 { font-size: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px; }
+        .title-area p { font-size: 0.85rem; color: #94a3b8; }
+
         .scoreboard {
-            padding: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            text-align: center;
+            padding: 0 20px 20px; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; align-items: center;
         }
-        .score-card {
-            background-color: #27375a;
-            padding: 15px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex: 1;
-            min-width: 140px;
-        }
-        .score-card.highlight { background: linear-gradient(135deg, #f97316, #ea580c); box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4); }
-        .score-title { font-size: 0.7rem; font-weight: bold; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
-        .score-card.highlight .score-title { color: #fed7aa; }
-        .score-value { font-size: 1.5rem; font-weight: 900; }
-        .legend { background-color: #27375a; padding: 10px 15px; border-radius: 12px; display: flex; gap: 15px; justify-content: center; font-size: 0.8rem; width: 100%; margin-top: 5px;}
-        .legend-item { display: flex; align-items: center; gap: 5px; }
+        
+        /* Desain Skor sesuai gambar (Biru dan Oranye) */
+        .score-box { background-color: #2b3a60; padding: 15px 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px; }
+        .score-box.orange { background: linear-gradient(135deg, #f97316, #ea580c); box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4); }
+        .progress-circle { width: 45px; height: 45px; border-radius: 50%; border: 3px solid #3b82f6; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 0.9rem; }
+        
+        .score-label { font-size: 0.65rem; color: #cbd5e1; font-weight: bold; letter-spacing: 1px; }
+        .score-box.orange .score-label { color: #fed7aa; }
+        .score-val { font-size: 1.4rem; font-weight: 900; }
+
+        .legend-box { background-color: #2b3a60; padding: 15px 20px; border-radius: 12px; display: flex; gap: 15px; font-size: 0.8rem; align-items: center;}
+        .legend-item { display: flex; align-items: center; gap: 8px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
 
-        /* Container Peta (Bisa digeser horizontal di HP) */
-        .map-wrapper {
-            padding: 0 20px 20px;
-            width: 100%;
-            overflow-x: auto; /* Memungkinkan scroll horizontal */
-        }
+        /* Area Peta (Bisa di-scroll ke kanan-kiri di HP) */
+        .map-scroll-area { width: 100%; overflow-x: auto; padding: 0 20px 40px; }
         .map-container {
-            background-color: #202e50;
-            border: 2px solid #2a3a60;
-            border-radius: 16px;
+            background-color: #223054;
+            border: 1px solid #334570;
+            border-radius: 20px;
             position: relative;
-            min-width: 600px; /* Lebar minimum agar peta tidak gepeng */
-            height: 350px;
+            min-width: 800px; /* Lebar minimum agar muat 18 titik */
+            height: 400px;
             margin: 0 auto;
-            overflow: hidden;
+            /* GAMBAR PETA ASLIMU DIPASANG DI SINI */
+            background-image: url('img/peta-indonesia.png'); 
+            background-size: 90%;
+            background-position: center;
+            background-repeat: no-repeat;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
         }
 
-        /* SVG Peta Low-Poly Sederhana */
-        .island { fill: #2d4a3e; stroke: #4ade80; stroke-width: 1.5; opacity: 0.8; }
-
-        /* Marker Titik Konflik */
+        /* Titik Angka Merah */
         .marker {
             position: absolute;
-            width: 24px;
-            height: 24px;
-            background-color: #ef4444; /* Merah default */
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.7rem;
-            font-weight: bold;
-            cursor: pointer;
+            width: 26px; height: 26px;
+            background-color: #ef4444; 
+            color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 0.75rem; font-weight: bold; cursor: pointer;
             transform: translate(-50%, -50%);
             box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
-            transition: transform 0.2s;
-            z-index: 10;
+            transition: all 0.2s; z-index: 10;
         }
-        .marker:hover { transform: translate(-50%, -50%) scale(1.2); }
-        .marker.visited { background-color: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.6); } /* Hijau jika sudah */
+        .marker:hover { transform: translate(-50%, -50%) scale(1.1); }
+        .marker.visited { background-color: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.6); }
 
-        /* =========================================
-           POP-UP MODAL (DETAIL KONFLIK)
-        ========================================= */
+        /* Modal Pop-up (Persis seperti gambarmu) */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: flex; justify-content: center; align-items: flex-end; /* Muncul dari bawah di HP */
-            z-index: 100;
-            opacity: 0; visibility: hidden;
-            transition: all 0.3s;
+            background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; 
+            z-index: 100; opacity: 0; visibility: hidden; transition: all 0.3s; padding: 20px;
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         
         .modal-content {
-            background-color: #ffffff;
-            color: #333;
-            width: 100%; max-width: 480px;
-            border-radius: 20px 20px 0 0;
-            padding: 25px 20px;
-            max-height: 85vh;
-            overflow-y: auto;
-            transform: translateY(100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #ffffff; color: #333; width: 100%; max-width: 500px;
+            border-radius: 16px; padding: 25px; max-height: 90vh; overflow-y: auto;
+            transform: scale(0.9); transition: transform 0.3s;
         }
-        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .modal-overlay.active .modal-content { transform: scale(1); }
 
         .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-        .location-badge { background-color: #fee2e2; color: #ef4444; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin-bottom: 5px; display: inline-block; }
-        .modal-title { font-size: 1.3rem; font-weight: 900; color: #1e293b; }
+        .location-badge { background-color: #fee2e2; color: #ef4444; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; margin-bottom: 8px; display: inline-block; }
+        .modal-title { font-size: 1.4rem; font-weight: 900; color: #1e293b; }
         .close-modal { background: none; border: none; font-size: 1.5rem; color: #94a3b8; cursor: pointer; }
 
-        /* Blok Detail (Warna-warni persis seperti desainmu) */
-        .detail-block { border-radius: 12px; padding: 15px; margin-bottom: 12px; font-size: 0.9rem; line-height: 1.6; }
-        .detail-block h4 { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 1rem; }
+        .detail-block { border-radius: 12px; padding: 18px; margin-bottom: 15px; font-size: 0.95rem; line-height: 1.6; }
+        .detail-block h4 { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 1.05rem; }
         
-        .bg-blue { background-color: #eff6ff; color: #3b82f6; }
-        .text-blue { color: #475569; }
-        .bg-red { background-color: #fef2f2; color: #ef4444; }
-        .text-red { color: #7f1d1d; }
-        .bg-yellow { background-color: #fefce8; color: #eab308; }
-        .text-yellow { color: #713f12; }
-        .bg-green { background-color: #f0fdf4; color: #10b981; }
-        .text-green { color: #14532d; }
+        .bg-blue { background-color: #eff6ff; color: #3b82f6; } .text-blue { color: #475569; }
+        .bg-red { background-color: #fef2f2; color: #ef4444; } .text-red { color: #7f1d1d; }
+        .bg-yellow { background-color: #fefce8; color: #eab308; } .text-yellow { color: #713f12; }
+        .bg-green { background-color: #f0fdf4; color: #10b981; } .text-green { color: #14532d; }
 
-        .modal-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+        .modal-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
         .reward-text { color: #10b981; font-weight: bold; font-size: 0.9rem; opacity: 0; }
-        .reward-text.show { opacity: 1; animation: popUp 0.5s ease; }
-        .btn-close-modal { background-color: #2563eb; color: white; padding: 10px 25px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-
-        @keyframes popUp {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        .reward-text.show { opacity: 1; }
+        .btn-close-modal { background-color: #2563eb; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem;}
     </style>
 </head>
 <body>
 
     <header class="app-header">
         <a href="index.html" class="back-btn">←</a>
-        <div class="header-title">🗺️ Explorer Konflik Indonesia</div>
     </header>
 
-    <p style="text-align: center; font-size: 0.85rem; color: #94a3b8; padding: 15px 20px 0;">Jelajahi peta Indonesia dan temukan konflik sosial yang pernah terjadi di berbagai wilayah.</p>
+    <div class="title-area">
+        <h1>🗺️ Explorer Konflik Indonesia</h1>
+        <p>Jelajahi peta Indonesia dan temukan konflik sosial yang pernah terjadi di berbagai wilayah</p>
+    </div>
 
     <div class="scoreboard">
-        <div class="score-card">
-            <div style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid #3b82f6; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #3b82f6;" id="progressCircle">0%</div>
-            <div style="text-align: left;">
-                <div class="score-title">PROGRESS</div>
-                <div class="score-value" id="progressText">0 / 4</div>
+        <div class="score-box">
+            <div class="progress-circle" id="progressCircle">0%</div>
+            <div>
+                <div class="score-label">PROGRESS</div>
+                <div class="score-val" id="progressText">0 / 18</div>
             </div>
         </div>
-        <div class="score-card highlight">
-            <div style="font-size: 2rem;">⭐</div>
-            <div style="text-align: left;">
-                <div class="score-title">SKOR EXPLORER</div>
-                <div class="score-value" id="scoreText">0</div>
+        <div class="score-box orange">
+            <div style="font-size: 1.8rem;">⭐</div>
+            <div>
+                <div class="score-label">SKOR EXPLORER</div>
+                <div class="score-val" id="scoreText">0</div>
             </div>
         </div>
-        <div class="legend">
-            <div class="legend-item"><div class="dot" style="background: #ef4444;"></div> Belum dijelajahi</div>
-            <div class="legend-item"><div class="dot" style="background: #10b981;"></div> Sudah dijelajahi</div>
+        <div class="legend-box">
+            <div class="legend-item"><div class="dot" style="background: #ef4444;"></div> Belum</div>
+            <div class="legend-item"><div class="dot" style="background: #10b981;"></div> Sudah</div>
         </div>
     </div>
 
-    <div class="map-wrapper">
+    <div class="map-scroll-area">
         <div class="map-container" id="mapContainer">
-            <svg width="100%" height="100%" viewBox="0 0 800 400" preserveAspectRatio="none">
-                <polygon class="island" points="100,50 200,100 250,220 150,300 80,200" />
-                <polygon class="island" points="220,320 380,330 400,350 200,340" />
-                <polygon class="island" points="280,120 420,100 450,230 350,250 260,180" />
-                <polygon class="island" points="480,140 550,150 500,280 460,200" />
-                <polygon class="island" points="650,180 780,160 750,320 620,280" />
-            </svg>
-            
             </div>
     </div>
 
@@ -200,30 +149,27 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div>
-                    <div class="location-badge" id="m-lokasi">📍 Aceh</div>
-                    <h2 class="modal-title" id="m-title">Konflik GAM (1976-2005)</h2>
+                    <div class="location-badge" id="m-lokasi">📍 Lokasi</div>
+                    <h2 class="modal-title" id="m-title">Judul Konflik</h2>
                 </div>
                 <button class="close-modal" onclick="closeModal()">✕</button>
             </div>
 
             <div class="detail-block bg-blue">
                 <h4 style="color: #2563eb;">📅 Kronologi Lengkap</h4>
-                <p class="text-blue" id="m-kronologi">Teks kronologi akan muncul di sini.</p>
+                <p class="text-blue" id="m-kronologi">-</p>
             </div>
-
             <div class="detail-block bg-red">
                 <h4 style="color: #dc2626;">⚠️ Penyebab</h4>
-                <p class="text-red" id="m-penyebab">Teks penyebab akan muncul di sini.</p>
+                <p class="text-red" id="m-penyebab">-</p>
             </div>
-
             <div class="detail-block bg-yellow">
                 <h4 style="color: #ca8a04;">💥 Dampak</h4>
-                <p class="text-yellow" id="m-dampak">Teks dampak akan muncul di sini.</p>
+                <p class="text-yellow" id="m-dampak">-</p>
             </div>
-
             <div class="detail-block bg-green">
                 <h4 style="color: #16a34a;">✅ Penyelesaian</h4>
-                <p class="text-green" id="m-penyelesaian">Teks penyelesaian akan muncul di sini.</p>
+                <p class="text-green" id="m-penyelesaian">-</p>
             </div>
 
             <div class="modal-footer">
@@ -234,63 +180,53 @@
     </div>
 
     <script>
-        // Data Konflik (Kamu bisa menambahkan data lain di sini sampai 18 titik)
+        // 18 Data Konflik Indonesia 
+        // Nilai X (kiri ke kanan) dan Y (atas ke bawah) dalam persentase (0-100%).
         const conflictData = [
-            {
-                id: 1,
-                x: 15, y: 35, // Posisi X dan Y (persentase) di atas peta
-                lokasi: "Aceh",
-                title: "Konflik GAM (1976–2005)",
-                kronologi: "Gerakan Aceh Merdeka (GAM) didirikan pada tahun 1976 dengan tujuan memisahkan diri dari Indonesia. Operasi militer seperti DOM (Daerah Operasi Militer) berlangsung brutal hingga 1998. Pasca Tsunami 2004, kedua pihak menyadari pentingnya kemanusiaan dan memulai perundingan damai di Helsinki.",
-                penyebab: "Tuntutan kemerdekaan Gerakan Aceh Merdeka dan ketidakpuasan terhadap pengelolaan sumber daya alam serta marginalisasi Aceh dalam struktur negara.",
-                dampak: "Konflik bersenjata berkepanjangan, ribuan korban jiwa, kerusakan infrastruktur, dan trauma sosial yang mendalam.",
-                penyelesaian: "Penandatanganan Memorandum of Understanding (MoU) Helsinki pada 15 Agustus 2005 yang memberikan otonomi khusus dengan sistem Syariat Islam."
-            },
-            {
-                id: 2,
-                x: 43, y: 45, 
-                lokasi: "Sampit, Kalteng",
-                title: "Konflik Sampit (2001)",
-                kronologi: "Pecah pada Februari 2001, berupa kerusuhan antaretnis yang berawal dari perselisihan warga setempat yang merambat menjadi bentrokan massal bersenjata tajam. Ribuan warga dievakuasi keluar dari wilayah tersebut.",
-                penyebab: "Kecemburuan sosial dan ekonomi, serta gesekan budaya akibat transmigrasi yang tidak diimbangi dengan asimilasi yang baik antar warga.",
-                dampak: "Korban jiwa mencapai ratusan orang, ribuan rumah dibakar, dan lebih dari 100.000 orang harus mengungsi meninggalkan harta bendanya.",
-                penyelesaian: "Pengerahan aparat keamanan secara masif, evakuasi warga, dan dilanjutkan dengan perjanjian damai antar tokoh adat."
-            },
-            {
-                id: 3,
-                x: 64, y: 55, 
-                lokasi: "Poso, Sulteng",
-                title: "Konflik Poso (1998-2001)",
-                kronologi: "Rangkaian kerusuhan berlatar belakang agama yang terbagi dalam beberapa fase. Dimulai dari pertikaian pemuda yang dihasut menjadi sentimen agama yang meluas melibatkan massa bersenjata.",
-                penyebab: "Ketegangan politik lokal (persaingan jabatan birokrasi), provokasi pihak luar, dan kesenjangan ekonomi yang dibalut dengan sentimen agama.",
-                dampak: "Ribuan korban tewas, hancurnya fasilitas ibadah dan rumah warga, serta segregasi permukiman berdasarkan agama.",
-                penyelesaian: "Deklarasi Malino I (Desember 2001) yang diinisiasi pemerintah pusat untuk menghentikan kekerasan dan melucuti senjata."
-            },
-            {
-                id: 4,
-                x: 88, y: 65, 
-                lokasi: "Wamena, Papua",
-                title: "Kerusuhan Wamena (2019)",
-                kronologi: "Terjadi pada September 2019, berawal dari aksi demonstrasi siswa yang berujung pada pembakaran fasilitas publik, toko, dan rumah warga. Ribuan pendatang terpaksa mengungsi ke bandara dan aparat TNI/Polri dikerahkan.",
-                penyebab: "Dipicu oleh berita bohong (hoaks) dugaan tindakan rasisme oleh seorang oknum yang menyebar cepat di kalangan masyarakat.",
-                dampak: "Puluhan warga sipil meninggal dunia, trauma massal, kerugian ekonomi miliaran rupiah akibat pembakaran aset.",
-                penyelesaian: "Penegakan hukum terhadap penyebar hoaks, dialog antar tokoh masyarakat dan agama, serta pemulihan fasilitas publik oleh pemerintah."
-            }
+            /* --- SUMATERA --- */
+            { id: 1, x: 18, y: 30, lokasi: "Aceh", title: "Konflik GAM (1976–2005)", kronologi: "Gerakan separatis GAM untuk memisahkan diri dari Indonesia.", penyebab: "Ketidakpuasan pembagian kekayaan alam dan sentimen historis.", dampak: "Ribuan korban jiwa dan rusaknya fasilitas umum.", penyelesaian: "Perjanjian Helsinki 2005 (Otonomi Khusus)." },
+            { id: 2, x: 25, y: 48, lokasi: "Lampung", title: "Konflik Mesuji (2011)", kronologi: "Bentrokan warga dan perusahaan sawit terkait sengketa lahan adat.", penyebab: "Sengketa lahan perkebunan dan perluasan lahan perusahaan.", dampak: "Korban jiwa dari warga dan karyawan perusahaan.", penyelesaian: "Investigasi Tim Gabungan Pencari Fakta (TGPF) bentukan Presiden." },
+            { id: 3, x: 22, y: 40, lokasi: "Sumut", title: "Kerusuhan Tanjungbalai (2016)", kronologi: "Kerusuhan massa yang merusak tempat ibadah karena sentimen etnis.", penyebab: "Miskomunikasi dan provokasi sentimen SARA lewat media sosial.", dampak: "Rusaknya beberapa tempat ibadah vihara dan klenteng.", penyelesaian: "Dialog antarumat beragama dan proses hukum provokator." },
+            
+            /* --- JAWA --- */
+            { id: 4, x: 35, y: 65, lokasi: "Jakarta", title: "Kerusuhan Mei (1998)", kronologi: "Kerusuhan massal berlatar ekonomi dan rasial di penghujung Orde Baru.", penyebab: "Krisis moneter dan ketidakstabilan politik nasional.", dampak: "Lengsernya Presiden Soeharto, ribuan ruko dibakar, dan korban jiwa.", penyelesaian: "Reformasi dan pembentukan pemerintahan transisi." },
+            { id: 5, x: 40, y: 70, lokasi: "Situbondo, Jatim", title: "Kerusuhan Situbondo (1996)", kronologi: "Kerusuhan massa yang dipicu ketidakpuasan atas putusan pengadilan.", penyebab: "Salah paham dan provokasi agama terhadap sebuah sekte.", dampak: "Pembakaran gereja dan fasilitas umum.", penyelesaian: "Tindakan tegas aparat dan rekonsiliasi tokoh agama." },
+            { id: 6, x: 42, y: 68, lokasi: "Sampang, Madura", title: "Konflik Syiah (2012)", kronologi: "Penyerangan kelompok mayoritas terhadap komunitas Syiah di Sampang.", penyebab: "Perbedaan paham keagamaan intra-Islam (Sunni-Syiah).", dampak: "Puluhan rumah dibakar dan ratusan warga dievakuasi.", penyelesaian: "Relokasi sementara korban dan mediasi Kemenag." },
+            { id: 7, x: 32, y: 66, lokasi: "Banten", title: "Konflik Cikeusik (2011)", kronologi: "Penyerangan terhadap jemaah Ahmadiyah di Cikeusik.", penyebab: "Penolakan terhadap aliran yang dianggap menyimpang.", dampak: "Tiga korban tewas dan luka-luka berat.", penyelesaian: "Penegakan hukum bagi pelaku penyerangan." },
+
+            /* --- NUSA TENGGARA & BALI --- */
+            { id: 8, x: 48, y: 75, lokasi: "Bali", title: "Bom Bali I (2002)", kronologi: "Serangan terorisme berskala besar di Kuta, Bali.", penyebab: "Ekstremisme dan radikalisme jaringan terorisme.", dampak: "202 orang meninggal (mayoritas WNA asing) dan pariwisata lumpuh.", penyelesaian: "Penangkapan teroris oleh Densus 88 dan deradikalisasi." },
+            { id: 9, x: 53, y: 76, lokasi: "Sumbawa, NTB", title: "Kerusuhan Sumbawa (2013)", kronologi: "Kerusuhan bernuansa SARA akibat isu kecelakaan lalu lintas.", penyebab: "Isu hoaks yang menyebar di masyarakat luas.", dampak: "Pembakaran puluhan rumah dan evakuasi ribuan warga.", penyelesaian: "Pengerahan aparat kepolisian dan tokoh adat." },
+            { id: 10, x: 58, y: 78, lokasi: "Adonara, NTT", title: "Perang Tanding", kronologi: "Konflik tradisional antardesa/klan yang masih kerap terjadi.", penyebab: "Sengketa batas tanah ulayat dan harga diri klan.", dampak: "Korban jiwa dan luka-luka akibat senjata tradisional.", penyelesaian: "Penyelesaian hukum adat dan mediasi aparat kepolisian." },
+
+            /* --- KALIMANTAN --- */
+            { id: 11, x: 40, y: 38, lokasi: "Kalteng", title: "Konflik Sampit (2001)", kronologi: "Kerusuhan antaretnis bersenjata tajam di Sampit dan sekitarnya.", penyebab: "Gesekan ekonomi dan budaya antara warga asli dan transmigran.", dampak: "Ratusan korban jiwa dan eksodus ribuan pengungsi.", penyelesaian: "Perjanjian damai adat dan pengamanan TNI/Polri." },
+            { id: 12, x: 38, y: 45, lokasi: "Kalbar", title: "Konflik Sambas (1999)", kronologi: "Pertikaian antaretnis yang meluas di wilayah Sambas.", penyebab: "Kecemburuan sosial ekonomi dan rentetan perkelahian pemuda.", dampak: "Eksodus besar-besaran etnis minoritas dari wilayah tersebut.", penyelesaian: "Pemulihan keamanan oleh pemerintah dan rekonsiliasi." },
+            { id: 13, x: 48, y: 35, lokasi: "Kaltara", title: "Kerusuhan Tarakan (2010)", kronologi: "Bentrokan massa yang dipicu oleh pengeroyokan individu.", penyebab: "Solidaritas etnis yang berujung pada aksi balas dendam massal.", dampak: "Aktivitas kota lumpuh total selama beberapa hari.", penyelesaian: "Deklarasi damai antartokoh masyarakat disaksikan gubernur." },
+
+            /* --- SULAWESI --- */
+            { id: 14, x: 55, y: 45, lokasi: "Sulteng", title: "Konflik Poso (1998-2001)", kronologi: "Kerusuhan berlatar agama yang membelah masyarakat Poso.", penyebab: "Persaingan politik lokal dan sentimen keagamaan.", dampak: "Segregasi wilayah berdasarkan agama dan ribuan korban tewas.", penyelesaian: "Deklarasi Malino I tahun 2001." },
+            { id: 15, x: 53, y: 55, lokasi: "Makassar", title: "Bentrok Mahasiswa", kronologi: "Tawuran antar fakultas/kampus yang kerap terjadi turun-temurun.", penyebab: "Ego sektoral kampus dan tradisi senioritas yang keliru.", dampak: "Fasilitas kampus rusak dan terganggunya perkuliahan.", penyelesaian: "Sanksi DO dari rektorat dan pendekatan persuasif." },
+
+            /* --- MALUKU --- */
+            { id: 16, x: 68, y: 45, lokasi: "Maluku", title: "Konflik Ambon (1999)", kronologi: "Konflik berdarah bernuansa agama yang menyebar ke seluruh Maluku.", penyebab: "Gesekan warga sipil (supir angkot) yang dipolitisasi.", dampak: "Rusaknya tatanan sosial, ekonomi, dan ribuan korban jiwa.", penyelesaian: "Deklarasi Malino II tahun 2002." },
+            { id: 17, x: 72, y: 38, lokasi: "Maluku Utara", title: "Konflik Halmahera (1999)", kronologi: "Rentetan dari konflik Ambon yang merembet ke pemekaran wilayah.", penyebab: "Sengketa tapal batas dan persaingan elit politik lokal.", dampak: "Pertikaian fisik dan pengungsian besar-besaran.", penyelesaian: "Intervensi aparat gabungan dan mediasi pemda." },
+
+            /* --- PAPUA --- */
+            { id: 18, x: 88, y: 45, lokasi: "Papua", title: "Kerusuhan Wamena (2019)", kronologi: "Aksi protes siswa yang berujung kerusuhan dan pembakaran kota.", penyebab: "Berita hoaks rasisme yang menyebar dengan cepat.", dampak: "Puluhan tewas dan eksodus ribuan pendatang.", penyelesaian: "Penegakan hukum dan pemulihan fasilitas oleh pemerintah." }
         ];
 
-        // Variabel Status Game
-        const TOTAL_KASUS = conflictData.length;
         let exploredCases = JSON.parse(localStorage.getItem('exploredCases')) || [];
         let score = exploredCases.length * 10;
+        const TOTAL_KASUS = conflictData.length;
 
-        // Inisialisasi Peta & Status
         function initGame() {
             const mapContainer = document.getElementById('mapContainer');
             
-            // Render Marker
             conflictData.forEach(data => {
                 const marker = document.createElement('div');
                 marker.className = `marker ${exploredCases.includes(data.id) ? 'visited' : ''}`;
+                // X dan Y mengatur posisi titik (bisa kamu atur di array conflictData di atas)
                 marker.style.left = `${data.x}%`;
                 marker.style.top = `${data.y}%`;
                 marker.innerText = data.id;
@@ -301,19 +237,15 @@
             updateScoreboard();
         }
 
-        // Fungsi Memperbarui Papan Skor
         function updateScoreboard() {
             const progress = exploredCases.length;
             const percentage = Math.round((progress / TOTAL_KASUS) * 100);
-            
             document.getElementById('progressText').innerText = `${progress} / ${TOTAL_KASUS}`;
             document.getElementById('progressCircle').innerText = `${percentage}%`;
             document.getElementById('scoreText').innerText = score;
         }
 
-        // Fungsi Membuka Modal
         function openModal(data, markerElement) {
-            // Isi data ke dalam modal
             document.getElementById('m-lokasi').innerText = `📍 ${data.lokasi}`;
             document.getElementById('m-title').innerText = data.title;
             document.getElementById('m-kronologi').innerText = data.kronologi;
@@ -321,32 +253,24 @@
             document.getElementById('m-dampak').innerText = data.dampak;
             document.getElementById('m-penyelesaian').innerText = data.penyelesaian;
 
-            // Logika Penambahan Poin
             const rewardNotif = document.getElementById('rewardNotif');
             if (!exploredCases.includes(data.id)) {
-                // Jika baru pertama kali diklik
                 exploredCases.push(data.id);
                 localStorage.setItem('exploredCases', JSON.stringify(exploredCases));
                 score += 10;
-                
-                markerElement.classList.add('visited'); // Ubah jadi hijau
+                markerElement.classList.add('visited');
                 updateScoreboard();
-
-                rewardNotif.classList.add('show'); // Tampilkan notif +10
+                rewardNotif.classList.add('show');
             } else {
-                rewardNotif.classList.remove('show'); // Sembunyikan notif jika sudah pernah
+                rewardNotif.classList.remove('show');
             }
-
-            // Tampilkan Modal
             document.getElementById('conflictModal').classList.add('active');
         }
 
-        // Fungsi Menutup Modal
         function closeModal() {
             document.getElementById('conflictModal').classList.remove('active');
         }
 
-        // Jalankan game saat halaman dimuat
         window.onload = initGame;
     </script>
 </body>
