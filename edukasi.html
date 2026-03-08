@@ -3,88 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ruang Edukasi - PERSIKOS ADVENTURE</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Explorer Konflik Indonesia - PERSIKOS</title>
     <style>
-        /* CSS Khusus Tema Game PERSIKOS ADVENTURE */
-        body { background-color: #0b1a30; color: #ffffff; padding-bottom: 40px; margin: 0; font-family: -apple-system, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Arial, sans-serif; }
         
-        /* Header Navigasi Atas */
-        .app-header { background-color: #12233f; padding: 15px 20px; display: flex; align-items: center; gap: 15px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #1e365d; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .back-btn { color: #facc15; text-decoration: none; font-size: 1.5rem; font-weight: bold; padding-right: 10px; }
-        .header-title { font-size: 1.2rem; color: #facc15; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        body { 
+            background-color: #1e2b4d; /* Warna biru gelap khas dashboard game */
+            color: white; 
+            min-height: 100vh;
+        }
+
+        /* Navigasi Atas */
+        .app-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #151e36;
+            border-bottom: 1px solid #2a3a60;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .back-btn { color: white; text-decoration: none; font-size: 1.4rem; font-weight: bold; margin-right: 15px; }
+        .header-title { font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+
+        /* Area Scoreboard */
+        .scoreboard {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            text-align: center;
+        }
+        .score-card {
+            background-color: #27375a;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+            min-width: 140px;
+        }
+        .score-card.highlight { background: linear-gradient(135deg, #f97316, #ea580c); box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4); }
+        .score-title { font-size: 0.7rem; font-weight: bold; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+        .score-card.highlight .score-title { color: #fed7aa; }
+        .score-value { font-size: 1.5rem; font-weight: 900; }
+        .legend { background-color: #27375a; padding: 10px 15px; border-radius: 12px; display: flex; gap: 15px; justify-content: center; font-size: 0.8rem; width: 100%; margin-top: 5px;}
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+
+        /* Container Peta (Bisa digeser horizontal di HP) */
+        .map-wrapper {
+            padding: 0 20px 20px;
+            width: 100%;
+            overflow-x: auto; /* Memungkinkan scroll horizontal */
+        }
+        .map-container {
+            background-color: #202e50;
+            border: 2px solid #2a3a60;
+            border-radius: 16px;
+            position: relative;
+            min-width: 600px; /* Lebar minimum agar peta tidak gepeng */
+            height: 350px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        /* SVG Peta Low-Poly Sederhana */
+        .island { fill: #2d4a3e; stroke: #4ade80; stroke-width: 1.5; opacity: 0.8; }
+
+        /* Marker Titik Konflik */
+        .marker {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: #ef4444; /* Merah default */
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+            transition: transform 0.2s;
+            z-index: 10;
+        }
+        .marker:hover { transform: translate(-50%, -50%) scale(1.2); }
+        .marker.visited { background-color: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.6); } /* Hijau jika sudah */
+
+        /* =========================================
+           POP-UP MODAL (DETAIL KONFLIK)
+        ========================================= */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex; justify-content: center; align-items: flex-end; /* Muncul dari bawah di HP */
+            z-index: 100;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
         
-        /* Container Materi */
-        .container { padding: 25px 20px; max-width: 480px; margin: 0 auto; }
+        .modal-content {
+            background-color: #ffffff;
+            color: #333;
+            width: 100%; max-width: 480px;
+            border-radius: 20px 20px 0 0;
+            padding: 25px 20px;
+            max-height: 85vh;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+
+        .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .location-badge { background-color: #fee2e2; color: #ef4444; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin-bottom: 5px; display: inline-block; }
+        .modal-title { font-size: 1.3rem; font-weight: 900; color: #1e293b; }
+        .close-modal { background: none; border: none; font-size: 1.5rem; color: #94a3b8; cursor: pointer; }
+
+        /* Blok Detail (Warna-warni persis seperti desainmu) */
+        .detail-block { border-radius: 12px; padding: 15px; margin-bottom: 12px; font-size: 0.9rem; line-height: 1.6; }
+        .detail-block h4 { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 1rem; }
         
-        /* Kartu Materi ala Level Game */
-        .level-card { background-color: #12233f; border: 1px solid #1e365d; border-radius: 16px; padding: 25px 20px 20px; margin-bottom: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); position: relative; }
-        
-        /* Lencana Level di pojok kiri atas */
-        .level-badge { position: absolute; top: -15px; left: 20px; background-color: #facc15; color: #0f172a; font-weight: 900; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(250,204,21,0.3); letter-spacing: 1px;}
-        
-        .level-title { color: #ffffff; font-size: 1.3rem; margin-top: 5px; margin-bottom: 15px; border-bottom: 1px dashed #274373; padding-bottom: 10px; }
-        .level-content { color: #cbd5e1; font-size: 0.95rem; line-height: 1.7; }
-        .level-content ul { padding-left: 20px; margin-top: 10px; }
-        .level-content li { margin-bottom: 8px; }
-        
-        /* Teks yang di-highlight warna kuning */
-        .highlight { color: #facc15; font-weight: bold; }
-        
-        /* Tombol Selesai */
-        .btn-finish { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background-color: #10b981; color: white; padding: 16px; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 40px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); transition: transform 0.2s; }
-        .btn-finish:active { transform: scale(0.96); background-color: #059669; }
+        .bg-blue { background-color: #eff6ff; color: #3b82f6; }
+        .text-blue { color: #475569; }
+        .bg-red { background-color: #fef2f2; color: #ef4444; }
+        .text-red { color: #7f1d1d; }
+        .bg-yellow { background-color: #fefce8; color: #eab308; }
+        .text-yellow { color: #713f12; }
+        .bg-green { background-color: #f0fdf4; color: #10b981; }
+        .text-green { color: #14532d; }
+
+        .modal-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+        .reward-text { color: #10b981; font-weight: bold; font-size: 0.9rem; opacity: 0; }
+        .reward-text.show { opacity: 1; animation: popUp 0.5s ease; }
+        .btn-close-modal { background-color: #2563eb; color: white; padding: 10px 25px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+        @keyframes popUp {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
 
     <header class="app-header">
         <a href="index.html" class="back-btn">←</a>
-        <div class="header-title">📚 Ruang Edukasi</div>
+        <div class="header-title">🗺️ Explorer Konflik Indonesia</div>
     </header>
 
-    <div class="container">
-        
-        <div class="level-card">
-            <div class="level-badge">LEVEL 1</div>
-            <h2 class="level-title">Pengertian Konflik Sosial</h2>
-            <div class="level-content">
-                <p>Secara sosiologis, <span class="highlight">Konflik Sosial</span> adalah suatu proses sosial antara dua orang atau lebih (bisa juga kelompok) di mana salah satu pihak berusaha menyingkirkan pihak lain dengan menghancurkannya atau membuatnya tidak berdaya.</p>
-                <br>
-                <p>Konflik adalah hal yang wajar terjadi dalam masyarakat yang dinamis, karena setiap individu pasti memiliki perbedaan pandangan, latar belakang, dan kepentingan.</p>
+    <p style="text-align: center; font-size: 0.85rem; color: #94a3b8; padding: 15px 20px 0;">Jelajahi peta Indonesia dan temukan konflik sosial yang pernah terjadi di berbagai wilayah.</p>
+
+    <div class="scoreboard">
+        <div class="score-card">
+            <div style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid #3b82f6; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #3b82f6;" id="progressCircle">0%</div>
+            <div style="text-align: left;">
+                <div class="score-title">PROGRESS</div>
+                <div class="score-value" id="progressText">0 / 4</div>
             </div>
         </div>
-
-        <div class="level-card">
-            <div class="level-badge">LEVEL 2</div>
-            <h2 class="level-title">Akar Penyebab Konflik</h2>
-            <div class="level-content">
-                <p>Mengapa pertikaian bisa terjadi? Berikut adalah 4 faktor utama pemicunya:</p>
-                <ul>
-                    <li><span class="highlight">Perbedaan Individu:</span> Perbedaan perasaan, pendirian, atau pendapat antar manusia.</li>
-                    <li><span class="highlight">Perbedaan Kebudayaan:</span> Latar belakang budaya yang berbeda membentuk watak dan kepribadian yang berbeda pula.</li>
-                    <li><span class="highlight">Perbedaan Kepentingan:</span> Gesekan dalam hal ekonomi, politik, atau pembagian kekuasaan.</li>
-                    <li><span class="highlight">Perubahan Sosial:</span> Perubahan nilai yang terjadi terlalu cepat di dalam tatanan masyarakat.</li>
-                </ul>
+        <div class="score-card highlight">
+            <div style="font-size: 2rem;">⭐</div>
+            <div style="text-align: left;">
+                <div class="score-title">SKOR EXPLORER</div>
+                <div class="score-value" id="scoreText">0</div>
             </div>
         </div>
-
-        <div class="level-card">
-            <div class="level-badge">LEVEL 3</div>
-            <h2 class="level-title">Dampak yang Ditimbulkan</h2>
-            <div class="level-content">
-                <p>Konflik ibarat pisau bermata dua. Ia tidak selalu memberikan kerugian, lho!</p>
-                <ul>
-                    <li><span class="highlight">Dampak Negatif:</span> Rusaknya fasilitas umum, jatuhnya korban fisik/mental, dan retaknya hubungan antar kelompok masyarakat.</li>
-                    <li><span class="highlight">Dampak Positif:</span> Memperkuat solidaritas di dalam kelompok yang sama (*in-group solidarity*), mendorong munculnya kompromi baru, dan mengurangi ketergantungan antar individu.</li>
-                </ul>
-            </div>
+        <div class="legend">
+            <div class="legend-item"><div class="dot" style="background: #ef4444;"></div> Belum dijelajahi</div>
+            <div class="legend-item"><div class="dot" style="background: #10b981;"></div> Sudah dijelajahi</div>
         </div>
-
-        <a href="index.html" class="btn-finish">
-            🏆 Selesaikan Materi & Kembali
-        </a>
     </div>
 
+    <div class="map-wrapper">
+        <div class="map-container" id="mapContainer">
+            <svg width="100%" height="100%" viewBox="0 0 800 400" preserveAspectRatio="none">
+                <polygon class="island" points="100,50 200,100 250,220 150,300 80,200" />
+                <polygon class="island" points="220,320 380,330 400,350 200,340" />
+                <polygon class="island" points="280,120 420,100 450,230 350,250 260,180" />
+                <polygon class="island" points="480,140 550,150 500,280 460,200" />
+                <polygon class="island" points="650,180 780,160 750,320 620,280" />
+            </svg>
+            
+            </div>
+    </div>
+
+    <div class="modal-overlay" id="conflictModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <div class="location-badge" id="m-lokasi">📍 Aceh</div>
+                    <h2 class="modal-title" id="m-title">Konflik GAM (1976-2005)</h2>
+                </div>
+                <button class="close-modal" onclick="closeModal()">✕</button>
+            </div>
+
+            <div class="detail-block bg-blue">
+                <h4 style="color: #2563eb;">📅 Kronologi Lengkap</h4>
+                <p class="text-blue" id="m-kronologi">Teks kronologi akan muncul di sini.</p>
+            </div>
+
+            <div class="detail-block bg-red">
+                <h4 style="color: #dc2626;">⚠️ Penyebab</h4>
+                <p class="text-red" id="m-penyebab">Teks penyebab akan muncul di sini.</p>
+            </div>
+
+            <div class="detail-block bg-yellow">
+                <h4 style="color: #ca8a04;">💥 Dampak</h4>
+                <p class="text-yellow" id="m-dampak">Teks dampak akan muncul di sini.</p>
+            </div>
+
+            <div class="detail-block bg-green">
+                <h4 style="color: #16a34a;">✅ Penyelesaian</h4>
+                <p class="text-green" id="m-penyelesaian">Teks penyelesaian akan muncul di sini.</p>
+            </div>
+
+            <div class="modal-footer">
+                <span class="reward-text" id="rewardNotif">+10 poin ditambahkan!</span>
+                <button class="btn-close-modal" onclick="closeModal()">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Konflik (Kamu bisa menambahkan data lain di sini sampai 18 titik)
+        const conflictData = [
+            {
+                id: 1,
+                x: 15, y: 35, // Posisi X dan Y (persentase) di atas peta
+                lokasi: "Aceh",
+                title: "Konflik GAM (1976–2005)",
+                kronologi: "Gerakan Aceh Merdeka (GAM) didirikan pada tahun 1976 dengan tujuan memisahkan diri dari Indonesia. Operasi militer seperti DOM (Daerah Operasi Militer) berlangsung brutal hingga 1998. Pasca Tsunami 2004, kedua pihak menyadari pentingnya kemanusiaan dan memulai perundingan damai di Helsinki.",
+                penyebab: "Tuntutan kemerdekaan Gerakan Aceh Merdeka dan ketidakpuasan terhadap pengelolaan sumber daya alam serta marginalisasi Aceh dalam struktur negara.",
+                dampak: "Konflik bersenjata berkepanjangan, ribuan korban jiwa, kerusakan infrastruktur, dan trauma sosial yang mendalam.",
+                penyelesaian: "Penandatanganan Memorandum of Understanding (MoU) Helsinki pada 15 Agustus 2005 yang memberikan otonomi khusus dengan sistem Syariat Islam."
+            },
+            {
+                id: 2,
+                x: 43, y: 45, 
+                lokasi: "Sampit, Kalteng",
+                title: "Konflik Sampit (2001)",
+                kronologi: "Pecah pada Februari 2001, berupa kerusuhan antaretnis yang berawal dari perselisihan warga setempat yang merambat menjadi bentrokan massal bersenjata tajam. Ribuan warga dievakuasi keluar dari wilayah tersebut.",
+                penyebab: "Kecemburuan sosial dan ekonomi, serta gesekan budaya akibat transmigrasi yang tidak diimbangi dengan asimilasi yang baik antar warga.",
+                dampak: "Korban jiwa mencapai ratusan orang, ribuan rumah dibakar, dan lebih dari 100.000 orang harus mengungsi meninggalkan harta bendanya.",
+                penyelesaian: "Pengerahan aparat keamanan secara masif, evakuasi warga, dan dilanjutkan dengan perjanjian damai antar tokoh adat."
+            },
+            {
+                id: 3,
+                x: 64, y: 55, 
+                lokasi: "Poso, Sulteng",
+                title: "Konflik Poso (1998-2001)",
+                kronologi: "Rangkaian kerusuhan berlatar belakang agama yang terbagi dalam beberapa fase. Dimulai dari pertikaian pemuda yang dihasut menjadi sentimen agama yang meluas melibatkan massa bersenjata.",
+                penyebab: "Ketegangan politik lokal (persaingan jabatan birokrasi), provokasi pihak luar, dan kesenjangan ekonomi yang dibalut dengan sentimen agama.",
+                dampak: "Ribuan korban tewas, hancurnya fasilitas ibadah dan rumah warga, serta segregasi permukiman berdasarkan agama.",
+                penyelesaian: "Deklarasi Malino I (Desember 2001) yang diinisiasi pemerintah pusat untuk menghentikan kekerasan dan melucuti senjata."
+            },
+            {
+                id: 4,
+                x: 88, y: 65, 
+                lokasi: "Wamena, Papua",
+                title: "Kerusuhan Wamena (2019)",
+                kronologi: "Terjadi pada September 2019, berawal dari aksi demonstrasi siswa yang berujung pada pembakaran fasilitas publik, toko, dan rumah warga. Ribuan pendatang terpaksa mengungsi ke bandara dan aparat TNI/Polri dikerahkan.",
+                penyebab: "Dipicu oleh berita bohong (hoaks) dugaan tindakan rasisme oleh seorang oknum yang menyebar cepat di kalangan masyarakat.",
+                dampak: "Puluhan warga sipil meninggal dunia, trauma massal, kerugian ekonomi miliaran rupiah akibat pembakaran aset.",
+                penyelesaian: "Penegakan hukum terhadap penyebar hoaks, dialog antar tokoh masyarakat dan agama, serta pemulihan fasilitas publik oleh pemerintah."
+            }
+        ];
+
+        // Variabel Status Game
+        const TOTAL_KASUS = conflictData.length;
+        let exploredCases = JSON.parse(localStorage.getItem('exploredCases')) || [];
+        let score = exploredCases.length * 10;
+
+        // Inisialisasi Peta & Status
+        function initGame() {
+            const mapContainer = document.getElementById('mapContainer');
+            
+            // Render Marker
+            conflictData.forEach(data => {
+                const marker = document.createElement('div');
+                marker.className = `marker ${exploredCases.includes(data.id) ? 'visited' : ''}`;
+                marker.style.left = `${data.x}%`;
+                marker.style.top = `${data.y}%`;
+                marker.innerText = data.id;
+                marker.onclick = () => openModal(data, marker);
+                mapContainer.appendChild(marker);
+            });
+
+            updateScoreboard();
+        }
+
+        // Fungsi Memperbarui Papan Skor
+        function updateScoreboard() {
+            const progress = exploredCases.length;
+            const percentage = Math.round((progress / TOTAL_KASUS) * 100);
+            
+            document.getElementById('progressText').innerText = `${progress} / ${TOTAL_KASUS}`;
+            document.getElementById('progressCircle').innerText = `${percentage}%`;
+            document.getElementById('scoreText').innerText = score;
+        }
+
+        // Fungsi Membuka Modal
+        function openModal(data, markerElement) {
+            // Isi data ke dalam modal
+            document.getElementById('m-lokasi').innerText = `📍 ${data.lokasi}`;
+            document.getElementById('m-title').innerText = data.title;
+            document.getElementById('m-kronologi').innerText = data.kronologi;
+            document.getElementById('m-penyebab').innerText = data.penyebab;
+            document.getElementById('m-dampak').innerText = data.dampak;
+            document.getElementById('m-penyelesaian').innerText = data.penyelesaian;
+
+            // Logika Penambahan Poin
+            const rewardNotif = document.getElementById('rewardNotif');
+            if (!exploredCases.includes(data.id)) {
+                // Jika baru pertama kali diklik
+                exploredCases.push(data.id);
+                localStorage.setItem('exploredCases', JSON.stringify(exploredCases));
+                score += 10;
+                
+                markerElement.classList.add('visited'); // Ubah jadi hijau
+                updateScoreboard();
+
+                rewardNotif.classList.add('show'); // Tampilkan notif +10
+            } else {
+                rewardNotif.classList.remove('show'); // Sembunyikan notif jika sudah pernah
+            }
+
+            // Tampilkan Modal
+            document.getElementById('conflictModal').classList.add('active');
+        }
+
+        // Fungsi Menutup Modal
+        function closeModal() {
+            document.getElementById('conflictModal').classList.remove('active');
+        }
+
+        // Jalankan game saat halaman dimuat
+        window.onload = initGame;
+    </script>
 </body>
 </html>
