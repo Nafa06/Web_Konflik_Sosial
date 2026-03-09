@@ -8,7 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Arial, sans-serif; }
         
         body { 
-            background-color: #1a2342; /* Biru gelap khas dashboard */
+            background-color: #1a2342; /* Warna biru gelap */
             color: white; 
             min-height: 100vh;
         }
@@ -20,74 +20,75 @@
         }
         .back-btn { color: white; text-decoration: none; font-size: 1.5rem; font-weight: bold; margin-right: 15px; }
 
-        /* Area Judul */
+        /* Area Judul & Scoreboard */
         .title-area { text-align: center; margin-bottom: 20px; padding: 0 20px;}
         .title-area h1 { font-size: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px; }
         .title-area p { font-size: 0.85rem; color: #94a3b8; }
 
-        /* Scoreboard */
         .scoreboard {
             padding: 0 20px 20px; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; align-items: center;
         }
+        
+        /* Desain Skor sesuai gambar (Biru dan Oranye) */
         .score-box { background-color: #2b3a60; padding: 15px 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px; }
         .score-box.orange { background: linear-gradient(135deg, #f97316, #ea580c); box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4); }
         .progress-circle { width: 45px; height: 45px; border-radius: 50%; border: 3px solid #3b82f6; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 0.9rem; }
+        
         .score-label { font-size: 0.65rem; color: #cbd5e1; font-weight: bold; letter-spacing: 1px; }
         .score-box.orange .score-label { color: #fed7aa; }
         .score-val { font-size: 1.4rem; font-weight: 900; }
+
         .legend-box { background-color: #2b3a60; padding: 15px 20px; border-radius: 12px; display: flex; gap: 15px; font-size: 0.8rem; align-items: center;}
         .legend-item { display: flex; align-items: center; gap: 8px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
 
-        /* Area Peta - Berbasis Kode Murni */
+        /* Area Peta (Bisa di-scroll ke kanan-kiri di HP) */
         .map-scroll-area { width: 100%; overflow-x: auto; padding: 0 20px 40px; }
         .map-container {
             background-color: #223054;
-            border: 2px solid #334570;
+            border: 1px solid #334570;
             border-radius: 20px;
             position: relative;
-            min-width: 800px; /* Agar pulau tidak gepeng di HP */
+            min-width: 800px; /* Lebar minimum agar muat 18 titik */
             height: 400px;
             margin: 0 auto;
-            overflow: hidden;
+            /* GAMBAR PETA ASLIMU DIPASANG DI SINI */
+            background-image: url('img/peta-indonesia.png'); 
+            background-size: 90%;
+            background-position: center;
+            background-repeat: no-repeat;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
         }
 
-        /* Gaya Pulau SVG (Low Poly ala Canva) */
-        .island { 
-            fill: #2c4c3b; /* Hijau gelap */
-            stroke: #4ade80; /* Garis tepi hijau terang */
-            stroke-width: 2; 
-            stroke-linejoin: round;
-        }
-        .island-text { fill: #94a3b8; font-size: 12px; font-weight: bold; letter-spacing: 2px; }
-
-        /* Marker Titik Konflik */
+        /* Titik Angka Merah */
         .marker {
-            position: absolute; width: 26px; height: 26px;
-            background-color: #ef4444; color: white; border-radius: 50%; 
-            display: flex; justify-content: center; align-items: center;
+            position: absolute;
+            width: 26px; height: 26px;
+            background-color: #ef4444; 
+            color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center;
             font-size: 0.75rem; font-weight: bold; cursor: pointer;
             transform: translate(-50%, -50%);
             box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
             transition: all 0.2s; z-index: 10;
         }
-        .marker:hover { transform: translate(-50%, -50%) scale(1.2); }
+        .marker:hover { transform: translate(-50%, -50%) scale(1.1); }
         .marker.visited { background-color: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.6); }
 
-        /* Modal Pop-up */
+        /* Modal Pop-up (Persis seperti gambarmu) */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; 
             z-index: 100; opacity: 0; visibility: hidden; transition: all 0.3s; padding: 20px;
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
+        
         .modal-content {
             background-color: #ffffff; color: #333; width: 100%; max-width: 500px;
             border-radius: 16px; padding: 25px; max-height: 90vh; overflow-y: auto;
             transform: scale(0.9); transition: transform 0.3s;
         }
         .modal-overlay.active .modal-content { transform: scale(1); }
+
         .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
         .location-badge { background-color: #fee2e2; color: #ef4444; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; margin-bottom: 8px; display: inline-block; }
         .modal-title { font-size: 1.4rem; font-weight: 900; color: #1e293b; }
@@ -95,6 +96,7 @@
 
         .detail-block { border-radius: 12px; padding: 18px; margin-bottom: 15px; font-size: 0.95rem; line-height: 1.6; }
         .detail-block h4 { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 1.05rem; }
+        
         .bg-blue { background-color: #eff6ff; color: #3b82f6; } .text-blue { color: #475569; }
         .bg-red { background-color: #fef2f2; color: #ef4444; } .text-red { color: #7f1d1d; }
         .bg-yellow { background-color: #fefce8; color: #eab308; } .text-yellow { color: #713f12; }
@@ -140,28 +142,6 @@
 
     <div class="map-scroll-area">
         <div class="map-container" id="mapContainer">
-            <svg width="100%" height="100%" viewBox="0 0 1000 400" preserveAspectRatio="none" style="position: absolute; top:0; left:0;">
-                <polygon class="island" points="100,50 200,100 280,250 200,340 100,280 50,150" />
-                <text x="140" y="220" class="island-text">SUMATERA</text>
-                
-                <polygon class="island" points="260,340 450,350 480,380 250,380" />
-                <text x="340" y="370" class="island-text">JAWA</text>
-                
-                <polygon class="island" points="350,120 450,100 520,200 450,280 340,260 300,180" />
-                <text x="380" y="210" class="island-text">KALIMANTAN</text>
-                
-                <polygon class="island" points="530,160 620,130 650,220 580,240 600,320 550,330 520,250" />
-                <text x="560" y="210" class="island-text">SULAWESI</text>
-                
-                <polygon class="island" points="500,360 550,350 560,380 490,380" />
-                <polygon class="island" points="580,350 640,340 650,370 570,380" />
-                
-                <polygon class="island" points="670,220 730,200 750,280 660,290" />
-                
-                <polygon class="island" points="760,150 900,160 950,250 900,350 780,330 740,220" />
-                <text x="820" y="250" class="island-text">PAPUA</text>
-            </svg>
-            
             </div>
     </div>
 
@@ -200,39 +180,40 @@
     </div>
 
     <script>
-        // Data 18 Konflik Indonesia (Koordinat X dan Y disesuaikan dengan SVG Low-Poly)
+        // 18 Data Konflik Indonesia 
+        // Nilai X (kiri ke kanan) dan Y (atas ke bawah) dalam persentase (0-100%).
         const conflictData = [
-            // SUMATERA
-            { id: 1, x: 12, y: 25, lokasi: "Aceh", title: "Konflik GAM (1976–2005)", kronologi: "Gerakan separatis GAM untuk memisahkan diri dari Indonesia.", penyebab: "Ketidakpuasan pembagian kekayaan alam dan sentimen historis.", dampak: "Ribuan korban jiwa dan rusaknya fasilitas umum.", penyelesaian: "Perjanjian Helsinki 2005 (Otonomi Khusus)." },
-            { id: 2, x: 23, y: 65, lokasi: "Lampung", title: "Konflik Mesuji (2011)", kronologi: "Bentrokan warga dan perusahaan sawit terkait sengketa lahan adat.", penyebab: "Sengketa lahan perkebunan dan perluasan lahan perusahaan.", dampak: "Korban jiwa dari warga dan karyawan perusahaan.", penyelesaian: "Investigasi Tim Gabungan Pencari Fakta (TGPF) bentukan Presiden." },
-            { id: 3, x: 18, y: 45, lokasi: "Sumut", title: "Kerusuhan Tanjungbalai (2016)", kronologi: "Kerusuhan massa yang merusak tempat ibadah karena sentimen etnis.", penyebab: "Miskomunikasi dan provokasi sentimen SARA lewat media sosial.", dampak: "Rusaknya beberapa tempat ibadah vihara dan klenteng.", penyelesaian: "Dialog antarumat beragama dan proses hukum provokator." },
+            /* --- SUMATERA --- */
+            { id: 1, x: 18, y: 30, lokasi: "Aceh", title: "Konflik GAM (1976–2005)", kronologi: "Gerakan separatis GAM untuk memisahkan diri dari Indonesia.", penyebab: "Ketidakpuasan pembagian kekayaan alam dan sentimen historis.", dampak: "Ribuan korban jiwa dan rusaknya fasilitas umum.", penyelesaian: "Perjanjian Helsinki 2005 (Otonomi Khusus)." },
+            { id: 2, x: 25, y: 48, lokasi: "Lampung", title: "Konflik Mesuji (2011)", kronologi: "Bentrokan warga dan perusahaan sawit terkait sengketa lahan adat.", penyebab: "Sengketa lahan perkebunan dan perluasan lahan perusahaan.", dampak: "Korban jiwa dari warga dan karyawan perusahaan.", penyelesaian: "Investigasi Tim Gabungan Pencari Fakta (TGPF) bentukan Presiden." },
+            { id: 3, x: 22, y: 40, lokasi: "Sumut", title: "Kerusuhan Tanjungbalai (2016)", kronologi: "Kerusuhan massa yang merusak tempat ibadah karena sentimen etnis.", penyebab: "Miskomunikasi dan provokasi sentimen SARA lewat media sosial.", dampak: "Rusaknya beberapa tempat ibadah vihara dan klenteng.", penyelesaian: "Dialog antarumat beragama dan proses hukum provokator." },
             
-            // JAWA
-            { id: 4, x: 28, y: 88, lokasi: "Jakarta", title: "Kerusuhan Mei (1998)", kronologi: "Kerusuhan massal berlatar ekonomi dan rasial di penghujung Orde Baru.", penyebab: "Krisis moneter dan ketidakstabilan politik nasional.", dampak: "Lengsernya Presiden Soeharto, ribuan ruko dibakar, dan korban jiwa.", penyelesaian: "Reformasi dan pembentukan pemerintahan transisi." },
-            { id: 5, x: 42, y: 92, lokasi: "Situbondo, Jatim", title: "Kerusuhan Situbondo (1996)", kronologi: "Kerusuhan massa yang dipicu ketidakpuasan atas putusan pengadilan.", penyebab: "Salah paham dan provokasi agama.", dampak: "Pembakaran fasilitas ibadah.", penyelesaian: "Tindakan tegas aparat dan rekonsiliasi tokoh agama." },
-            { id: 6, x: 45, y: 88, lokasi: "Sampang, Madura", title: "Konflik Syiah (2012)", kronologi: "Penyerangan kelompok mayoritas terhadap komunitas Syiah di Sampang.", penyebab: "Perbedaan paham keagamaan intra-Islam.", dampak: "Puluhan rumah dibakar dan ratusan warga dievakuasi.", penyelesaian: "Relokasi sementara korban dan mediasi Kemenag." },
-            { id: 7, x: 34, y: 90, lokasi: "Banten", title: "Konflik Cikeusik (2011)", kronologi: "Penyerangan terhadap jemaah Ahmadiyah di Cikeusik.", penyebab: "Penolakan terhadap aliran yang dianggap menyimpang.", dampak: "Korban tewas dan luka-luka berat.", penyelesaian: "Penegakan hukum bagi pelaku penyerangan." },
+            /* --- JAWA --- */
+            { id: 4, x: 35, y: 65, lokasi: "Jakarta", title: "Kerusuhan Mei (1998)", kronologi: "Kerusuhan massal berlatar ekonomi dan rasial di penghujung Orde Baru.", penyebab: "Krisis moneter dan ketidakstabilan politik nasional.", dampak: "Lengsernya Presiden Soeharto, ribuan ruko dibakar, dan korban jiwa.", penyelesaian: "Reformasi dan pembentukan pemerintahan transisi." },
+            { id: 5, x: 40, y: 70, lokasi: "Situbondo, Jatim", title: "Kerusuhan Situbondo (1996)", kronologi: "Kerusuhan massa yang dipicu ketidakpuasan atas putusan pengadilan.", penyebab: "Salah paham dan provokasi agama terhadap sebuah sekte.", dampak: "Pembakaran gereja dan fasilitas umum.", penyelesaian: "Tindakan tegas aparat dan rekonsiliasi tokoh agama." },
+            { id: 6, x: 42, y: 68, lokasi: "Sampang, Madura", title: "Konflik Syiah (2012)", kronologi: "Penyerangan kelompok mayoritas terhadap komunitas Syiah di Sampang.", penyebab: "Perbedaan paham keagamaan intra-Islam (Sunni-Syiah).", dampak: "Puluhan rumah dibakar dan ratusan warga dievakuasi.", penyelesaian: "Relokasi sementara korban dan mediasi Kemenag." },
+            { id: 7, x: 32, y: 66, lokasi: "Banten", title: "Konflik Cikeusik (2011)", kronologi: "Penyerangan terhadap jemaah Ahmadiyah di Cikeusik.", penyebab: "Penolakan terhadap aliran yang dianggap menyimpang.", dampak: "Tiga korban tewas dan luka-luka berat.", penyelesaian: "Penegakan hukum bagi pelaku penyerangan." },
 
-            // NUSA TENGGARA & BALI
-            { id: 8, x: 52, y: 92, lokasi: "Bali", title: "Bom Bali I (2002)", kronologi: "Serangan terorisme berskala besar di Kuta, Bali.", penyebab: "Ekstremisme dan radikalisme jaringan terorisme.", dampak: "202 orang meninggal dan pariwisata lumpuh.", penyelesaian: "Penangkapan teroris oleh Densus 88 dan deradikalisasi." },
-            { id: 9, x: 58, y: 90, lokasi: "Sumbawa, NTB", title: "Kerusuhan Sumbawa (2013)", kronologi: "Kerusuhan bernuansa SARA akibat isu kecelakaan lalu lintas.", penyebab: "Isu hoaks yang menyebar di masyarakat luas.", dampak: "Pembakaran puluhan rumah dan evakuasi warga.", penyelesaian: "Pengerahan aparat kepolisian dan tokoh adat." },
-            { id: 10, x: 62, y: 92, lokasi: "Adonara, NTT", title: "Perang Tanding", kronologi: "Konflik tradisional antardesa/klan yang masih kerap terjadi.", penyebab: "Sengketa batas tanah ulayat dan harga diri klan.", dampak: "Korban jiwa akibat senjata tradisional.", penyelesaian: "Penyelesaian hukum adat dan mediasi aparat." },
+            /* --- NUSA TENGGARA & BALI --- */
+            { id: 8, x: 48, y: 75, lokasi: "Bali", title: "Bom Bali I (2002)", kronologi: "Serangan terorisme berskala besar di Kuta, Bali.", penyebab: "Ekstremisme dan radikalisme jaringan terorisme.", dampak: "202 orang meninggal (mayoritas WNA asing) dan pariwisata lumpuh.", penyelesaian: "Penangkapan teroris oleh Densus 88 dan deradikalisasi." },
+            { id: 9, x: 53, y: 76, lokasi: "Sumbawa, NTB", title: "Kerusuhan Sumbawa (2013)", kronologi: "Kerusuhan bernuansa SARA akibat isu kecelakaan lalu lintas.", penyebab: "Isu hoaks yang menyebar di masyarakat luas.", dampak: "Pembakaran puluhan rumah dan evakuasi ribuan warga.", penyelesaian: "Pengerahan aparat kepolisian dan tokoh adat." },
+            { id: 10, x: 58, y: 78, lokasi: "Adonara, NTT", title: "Perang Tanding", kronologi: "Konflik tradisional antardesa/klan yang masih kerap terjadi.", penyebab: "Sengketa batas tanah ulayat dan harga diri klan.", dampak: "Korban jiwa dan luka-luka akibat senjata tradisional.", penyelesaian: "Penyelesaian hukum adat dan mediasi aparat kepolisian." },
 
-            // KALIMANTAN
-            { id: 11, x: 40, y: 65, lokasi: "Kalteng", title: "Konflik Sampit (2001)", kronologi: "Kerusuhan antaretnis bersenjata tajam di Sampit dan sekitarnya.", penyebab: "Gesekan ekonomi dan budaya antara warga asli dan transmigran.", dampak: "Ratusan korban jiwa dan eksodus ribuan pengungsi.", penyelesaian: "Perjanjian damai adat dan pengamanan TNI/Polri." },
-            { id: 12, x: 36, y: 50, lokasi: "Kalbar", title: "Konflik Sambas (1999)", kronologi: "Pertikaian antaretnis yang meluas di wilayah Sambas.", penyebab: "Kecemburuan sosial ekonomi dan rentetan perkelahian pemuda.", dampak: "Eksodus besar-besaran etnis minoritas.", penyelesaian: "Pemulihan keamanan oleh pemerintah dan rekonsiliasi." },
-            { id: 13, x: 48, y: 40, lokasi: "Kaltara", title: "Kerusuhan Tarakan (2010)", kronologi: "Bentrokan massa yang dipicu oleh pengeroyokan individu.", penyebab: "Solidaritas etnis yang berujung pada aksi balas dendam massal.", dampak: "Aktivitas kota lumpuh total selama beberapa hari.", penyelesaian: "Deklarasi damai antartokoh masyarakat disaksikan gubernur." },
+            /* --- KALIMANTAN --- */
+            { id: 11, x: 40, y: 38, lokasi: "Kalteng", title: "Konflik Sampit (2001)", kronologi: "Kerusuhan antaretnis bersenjata tajam di Sampit dan sekitarnya.", penyebab: "Gesekan ekonomi dan budaya antara warga asli dan transmigran.", dampak: "Ratusan korban jiwa dan eksodus ribuan pengungsi.", penyelesaian: "Perjanjian damai adat dan pengamanan TNI/Polri." },
+            { id: 12, x: 38, y: 45, lokasi: "Kalbar", title: "Konflik Sambas (1999)", kronologi: "Pertikaian antaretnis yang meluas di wilayah Sambas.", penyebab: "Kecemburuan sosial ekonomi dan rentetan perkelahian pemuda.", dampak: "Eksodus besar-besaran etnis minoritas dari wilayah tersebut.", penyelesaian: "Pemulihan keamanan oleh pemerintah dan rekonsiliasi." },
+            { id: 13, x: 48, y: 35, lokasi: "Kaltara", title: "Kerusuhan Tarakan (2010)", kronologi: "Bentrokan massa yang dipicu oleh pengeroyokan individu.", penyebab: "Solidaritas etnis yang berujung pada aksi balas dendam massal.", dampak: "Aktivitas kota lumpuh total selama beberapa hari.", penyelesaian: "Deklarasi damai antartokoh masyarakat disaksikan gubernur." },
 
-            // SULAWESI
-            { id: 14, x: 58, y: 55, lokasi: "Sulteng", title: "Konflik Poso (1998-2001)", kronologi: "Kerusuhan berlatar agama yang membelah masyarakat Poso.", penyebab: "Persaingan politik lokal dan sentimen keagamaan.", dampak: "Segregasi wilayah dan ribuan korban tewas.", penyelesaian: "Deklarasi Malino I tahun 2001." },
-            { id: 15, x: 55, y: 75, lokasi: "Makassar", title: "Bentrok Mahasiswa", kronologi: "Tawuran antar fakultas/kampus yang kerap terjadi turun-temurun.", penyebab: "Ego sektoral kampus dan tradisi senioritas yang keliru.", dampak: "Fasilitas kampus rusak.", penyelesaian: "Sanksi DO dari rektorat dan pendekatan persuasif." },
+            /* --- SULAWESI --- */
+            { id: 14, x: 55, y: 45, lokasi: "Sulteng", title: "Konflik Poso (1998-2001)", kronologi: "Kerusuhan berlatar agama yang membelah masyarakat Poso.", penyebab: "Persaingan politik lokal dan sentimen keagamaan.", dampak: "Segregasi wilayah berdasarkan agama dan ribuan korban tewas.", penyelesaian: "Deklarasi Malino I tahun 2001." },
+            { id: 15, x: 53, y: 55, lokasi: "Makassar", title: "Bentrok Mahasiswa", kronologi: "Tawuran antar fakultas/kampus yang kerap terjadi turun-temurun.", penyebab: "Ego sektoral kampus dan tradisi senioritas yang keliru.", dampak: "Fasilitas kampus rusak dan terganggunya perkuliahan.", penyelesaian: "Sanksi DO dari rektorat dan pendekatan persuasif." },
 
-            // MALUKU
-            { id: 16, x: 72, y: 65, lokasi: "Maluku", title: "Konflik Ambon (1999)", kronologi: "Konflik berdarah bernuansa agama yang menyebar ke seluruh Maluku.", penyebab: "Gesekan warga sipil yang dipolitisasi.", dampak: "Rusaknya tatanan sosial, ekonomi, dan ribuan korban jiwa.", penyelesaian: "Deklarasi Malino II tahun 2002." },
-            { id: 17, x: 70, y: 45, lokasi: "Maluku Utara", title: "Konflik Halmahera (1999)", kronologi: "Rentetan dari konflik Ambon yang merembet ke pemekaran wilayah.", penyebab: "Sengketa tapal batas dan persaingan elit politik lokal.", dampak: "Pertikaian fisik dan pengungsian besar-besaran.", penyelesaian: "Intervensi aparat gabungan dan mediasi pemda." },
+            /* --- MALUKU --- */
+            { id: 16, x: 68, y: 45, lokasi: "Maluku", title: "Konflik Ambon (1999)", kronologi: "Konflik berdarah bernuansa agama yang menyebar ke seluruh Maluku.", penyebab: "Gesekan warga sipil (supir angkot) yang dipolitisasi.", dampak: "Rusaknya tatanan sosial, ekonomi, dan ribuan korban jiwa.", penyelesaian: "Deklarasi Malino II tahun 2002." },
+            { id: 17, x: 72, y: 38, lokasi: "Maluku Utara", title: "Konflik Halmahera (1999)", kronologi: "Rentetan dari konflik Ambon yang merembet ke pemekaran wilayah.", penyebab: "Sengketa tapal batas dan persaingan elit politik lokal.", dampak: "Pertikaian fisik dan pengungsian besar-besaran.", penyelesaian: "Intervensi aparat gabungan dan mediasi pemda." },
 
-            // PAPUA
-            { id: 18, x: 88, y: 55, lokasi: "Papua", title: "Kerusuhan Wamena (2019)", kronologi: "Aksi protes siswa yang berujung kerusuhan dan pembakaran kota.", penyebab: "Berita hoaks rasisme yang menyebar dengan cepat.", dampak: "Puluhan tewas dan eksodus ribuan pendatang.", penyelesaian: "Penegakan hukum dan pemulihan fasilitas oleh pemerintah." }
+            /* --- PAPUA --- */
+            { id: 18, x: 88, y: 45, lokasi: "Papua", title: "Kerusuhan Wamena (2019)", kronologi: "Aksi protes siswa yang berujung kerusuhan dan pembakaran kota.", penyebab: "Berita hoaks rasisme yang menyebar dengan cepat.", dampak: "Puluhan tewas dan eksodus ribuan pendatang.", penyelesaian: "Penegakan hukum dan pemulihan fasilitas oleh pemerintah." }
         ];
 
         let exploredCases = JSON.parse(localStorage.getItem('exploredCases')) || [];
@@ -245,6 +226,7 @@
             conflictData.forEach(data => {
                 const marker = document.createElement('div');
                 marker.className = `marker ${exploredCases.includes(data.id) ? 'visited' : ''}`;
+                // X dan Y mengatur posisi titik (bisa kamu atur di array conflictData di atas)
                 marker.style.left = `${data.x}%`;
                 marker.style.top = `${data.y}%`;
                 marker.innerText = data.id;
